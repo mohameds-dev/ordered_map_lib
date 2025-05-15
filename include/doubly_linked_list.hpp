@@ -8,8 +8,8 @@ struct Node {
     std::unique_ptr<Node> next;
     Node* prev;
 
-    Node(const T& val, Node* p, std::unique_ptr<Node> n)
-        : value(val), prev(p), next(std::move(n)) {}
+    Node(const T& a_value, Node* a_prev, std::unique_ptr<Node> a_next)
+        : value(a_value), prev(a_prev), next(std::move(a_next)) {}
 };
 
 template <typename T>
