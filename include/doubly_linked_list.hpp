@@ -35,9 +35,15 @@ public:
     }
 
     T pop_back() {
-        Node<T>* temp = tail;
-        tail = tail->prev;
-        return temp->value;
+        T popped_value = tail->value;
+
+        Node<T>* prev_node = tail->prev;
+        prev_node->next.reset();
+        tail = prev_node;
+
+        _size--;
+
+        return popped_value;
     }
 
     int size() const {
