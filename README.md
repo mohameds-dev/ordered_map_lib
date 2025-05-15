@@ -3,6 +3,7 @@
 A C++ project implementing an ordered map using a doubly-linked list to maintain element insertion order, built with CMake, tested with Catch2, and formatted with Clang-Format.
 
 ## Table of Contents
+
 - [Prerequisites](#prerequisites)
 - [Project Structure](#project-structure)
 - [Setting Up VS Code (or Cursor)](#setting-up-vs-code-or-cursor)
@@ -22,6 +23,7 @@ A C++ project implementing an ordered map using a doubly-linked list to maintain
 - **VS Code** or **Cursor**: Code editor with C++ support
 
 Verify installations:
+
 ```bash
 cmake --version
 git --version
@@ -40,22 +42,24 @@ ordered_map/
 ├── build.sh              # Script to build and test
 ├── .clang-format         # Code formatting rules
 ├── include/
-│   └── ordered_map.hpp    # Ordered map interface
+│   ├── doubly_linked_list.hpp    # Doubly-linked list implementation
+│   └── ordered_map.hpp          # (Future) Ordered map implementation
 ├── src/
-│   └── doubly_linked_list.cpp  # Doubly-linked list implementation
 ├── tests/
-│   └── test_ordered_map.cpp  # Catch2 test files
+│   └── test_doubly_linked_list.cpp  # Catch2 test files
 ```
 
 ## Setting Up VS Code (or Cursor)
 
 1. **Install Extensions**:
+
    - In VS Code/Cursor, go to Extensions (Ctrl+Shift+X).
    - Install:
      - **C/C++** (Microsoft): For IntelliSense and debugging.
      - **CMake Tools** (Microsoft): For CMake integration.
 
 2. **Configure IntelliSense**:
+
    - Create `.vscode/settings.json` (or `.cursor/settings.json`):
      ```json
      {
@@ -85,13 +89,16 @@ ordered_map/
 ## Building and Running Tests
 
 1. **Build and Test**:
+
    ```bash
    chmod +x build.sh
    ./build.sh
    ```
+
    - Formats code, builds with CMake/make, and runs Catch2 tests.
 
 2. **Output**:
+
    - Successful tests show:
      ```
      All tests passed (X assertions in Y test cases)
@@ -111,18 +118,21 @@ ordered_map/
   2. Ensure `.github/workflows/cmake.yml` exists.
   3. CI runs `build.sh` on `ubuntu-latest`, formatting, building, and testing.
 - **View Results**:
-  - Check the “Actions” tab on GitHub for CI logs.
+  - Check the "Actions" tab on GitHub for CI logs.
 
 ## Adding a New Test
 
-1. **Edit `tests/test_ordered_map.cpp`**:
-   - Add a `TEST_CASE` for the ordered map or doubly-linked list. Example:
+1. **Edit `tests/test_doubly_linked_list.cpp`**:
+
+   - Add a `TEST_CASE` for the doubly-linked list. Example:
      ```cpp
-     TEST_CASE("Insert maintains order", "[ordered_map]") {
-         OrderedMap<int, int> map;
-         map.insert(1, 10);
-         map.insert(2, 20);
-         REQUIRE(map.size() == 2);
+     TEST_CASE("Push back maintains order", "[push_back]") {
+         DoublyLinkedList<int> list;
+         list.push_back(1);
+         list.push_back(2);
+         REQUIRE(list.size() == 2);
+         REQUIRE(list.front() == 1);
+         REQUIRE(list.back() == 2);
      }
      ```
 
@@ -140,27 +150,44 @@ ordered_map/
   - Clear build: `rm -rf build && ./build.sh`.
   - Check prerequisites.
 - **Test Failures**:
-  - Inspect assertions in `test_ordered_map.cpp`.
+  - Inspect assertions in `test_doubly_linked_list.cpp`.
   - Run specific tests: `./build/tests --tags [tag]`.
 - **GitHub Actions Failures**:
-  - Check logs in the “Actions” tab on GitHub.
+  - Check logs in the "Actions" tab on GitHub.
   - Ensure `build.sh` and dependencies are compatible with `ubuntu-latest`.
 
 ## Example Test File
 
-`tests/test_ordered_map.cpp`:
+`tests/test_doubly_linked_list.cpp`:
+
 ```cpp
 #include <catch2/catch_test_macros.hpp>
-#include "ordered_map.hpp"
+#include "doubly_linked_list.hpp"
 
 TEST_CASE("Canary test", "[canary]") {
     REQUIRE(true);
 }
 
-TEST_CASE("Insert maintains order", "[ordered_map]") {
-    OrderedMap<int, int> map;
-    map.insert(1, 10);
-    map.insert(2, 20);
-    REQUIRE(map.size() == 2);
+TEST_CASE("Push back maintains order", "[push_back]") {
+    DoublyLinkedList<int> list;
+    list.push_back(1);
+    list.push_back(2);
+    REQUIRE(list.size() == 2);
+    REQUIRE(list.front() == 1);
+    REQUIRE(list.back() == 2);
 }
 ```
+
+## Project Status
+
+The project is currently in development, with the following components:
+
+1. ✅ Doubly Linked List Implementation
+
+   - Basic operations (push_back, pop_back, push_front, pop_front)
+   - Memory management using smart pointers
+   - Comprehensive test coverage
+
+2. 🔄 Ordered Map Implementation (Coming Soon)
+   - Will use the doubly linked list as its underlying data structure
+   - Will maintain insertion order while providing map-like functionality
