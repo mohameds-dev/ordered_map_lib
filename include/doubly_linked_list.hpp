@@ -1,32 +1,34 @@
 #pragma once
+#include <memory>
 
-// implement node with template type
+
 template <typename T>
 struct Node {
     T value;
+    std::unique_ptr<Node> next;
     Node* prev;
-    Node* next;
+
+    Node(const T& val, Node* p, std::unique_ptr<Node> n)
+        : value(val), prev(p), next(std::move(n)) {}
 };
 
 template <typename T>
 class DoublyLinkedList {
 private:
-    Node<T>* head;
+    std::unique_ptr<Node<T>> head;
     Node<T>* tail;
     int _size;
 
 public:
     DoublyLinkedList() : head(nullptr), tail(nullptr), _size(0) {}
 
-
-    void push_back(const T& value){
-        if (head == nullptr) {
-            head = new Node<T>{value, nullptr, nullptr};
-            tail = head;
-        }
-        else {
-            tail->next = new Node<T>{value, tail, nullptr};
-            tail = tail->next;
+    void push_back(const T& value) {
+        if (!head) {
+            head = std::make_unique<Node<T>>(value, nullptr, nullptr);
+            tail = head.get();
+        } else {
+            tail->next = std::make_unique<Node<T>>(value, tail, nullptr);
+            tail = tail->next.get();
         }
 
         _size++;
