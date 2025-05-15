@@ -18,4 +18,4 @@ cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 make
 
 # Run the tests
-./tests
+./tests --rng-seed 0
