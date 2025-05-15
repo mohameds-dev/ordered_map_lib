@@ -26,7 +26,7 @@ public:
         return _size;
     }
 
-    T front() const {
+    const T& front() const {
         if (!head) {
             throw std::out_of_range("List is empty");
         }
@@ -34,7 +34,7 @@ public:
         return head->value;
     }
 
-    T back() const {
+    const T& back() const {
         if (!tail) {
             throw std::out_of_range("List is empty");
         }
