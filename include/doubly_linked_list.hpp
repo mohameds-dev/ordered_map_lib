@@ -22,6 +22,25 @@ private:
 public:
     DoublyLinkedList() : head(nullptr), tail(nullptr), _size(0) {}
 
+    int size() const {
+        return _size;
+    }
+
+    T front() const {
+        if (!head) {
+            throw std::runtime_error("List is empty");
+        }
+
+        return head->value;
+    }
+
+    T back() const {
+        if (!tail) {
+            throw std::runtime_error("List is empty");
+        }
+        return tail->value;
+    }
+
     void push_back(const T& value) {
         if (!head) {
             head = std::make_unique<Node<T>>(value, nullptr, nullptr);
@@ -55,22 +74,18 @@ public:
         return popped_value;
     }
 
-    int size() const {
-        return _size;
-    }
-
-    T front() const {
+    void push_front(const T& value) {
         if (!head) {
-            throw std::runtime_error("List is empty");
+            head = std::make_unique<Node<T>>(value, nullptr, nullptr);
+            tail = head.get();
+        }
+        else {
+            auto new_node = std::make_unique<Node<T>>(value, nullptr, std::move(head));
+            new_node->next->prev = new_node.get();
+            head = std::move(new_node);
         }
 
-        return head->value;
+        _size++;
     }
 
-    T back() const {
-        if (!tail) {
-            throw std::runtime_error("List is empty");
-        }
-        return tail->value;
-    }
 };
