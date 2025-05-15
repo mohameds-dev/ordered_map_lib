@@ -35,11 +35,20 @@ public:
     }
 
     T pop_back() {
+        if (!head) {
+            throw std::runtime_error("List is empty");
+        }
+
         T popped_value = tail->value;
 
-        Node<T>* prev_node = tail->prev;
-        prev_node->next.reset();
-        tail = prev_node;
+        if (tail == head.get()) {
+            head.reset();
+            tail = nullptr;
+        } else {
+            Node<T>* prev_node = tail->prev;
+            prev_node->next.reset();
+            tail = prev_node;
+        }
 
         _size--;
 
@@ -51,10 +60,17 @@ public:
     }
 
     T front() const {
+        if (!head) {
+            throw std::runtime_error("List is empty");
+        }
+
         return head->value;
     }
 
     T back() const {
+        if (!tail) {
+            throw std::runtime_error("List is empty");
+        }
         return tail->value;
     }
 };

@@ -46,6 +46,41 @@ TEST_CASE("Test push_back 2, 1 and back returns 1", "[push_back]") {
     REQUIRE(list.back() == 1);
 }
 
+TEST_CASE("Test push_back 1, pop_back once, size = 0", "[pop_back]") {
+    DoublyLinkedList<int> list;
+    list.push_back(1);
+    list.pop_back();
+    REQUIRE(list.size() == 0);
+}
+
+TEST_CASE("Test push_back 1, pop_back returns 1", "[pop_back]") {
+    DoublyLinkedList<int> list;
+    list.push_back(1);
+    REQUIRE(list.pop_back() == 1);
+}
+
+TEST_CASE("Test push_back 1, 2, pop_back returns 2", "[pop_back]") {
+    DoublyLinkedList<int> list;
+    list.push_back(1);
+    list.push_back(2);
+    REQUIRE(list.pop_back() == 2);
+}
+
+TEST_CASE("Test pop_back on an empty list throws an exception", "[pop_back]") {
+    DoublyLinkedList<int> list;
+    REQUIRE_THROWS(list.pop_back());
+}
+
+TEST_CASE("Test front on an empty list throws an exception", "[front]") {
+    DoublyLinkedList<int> list;
+    REQUIRE_THROWS(list.front());
+}
+
+TEST_CASE("Test back on an empty list throws an exception", "[back]") {
+    DoublyLinkedList<int> list;
+    REQUIRE_THROWS(list.back());
+}
+
 TEST_CASE("Test push_back 1, 2, pop_back once, size = 1", "[push_back, pop_back]") {
     DoublyLinkedList<int> list;
     list.push_back(1);
