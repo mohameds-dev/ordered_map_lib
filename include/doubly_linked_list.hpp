@@ -28,7 +28,7 @@ public:
 
     T front() const {
         if (!head) {
-            throw std::runtime_error("List is empty");
+            throw std::out_of_range("List is empty");
         }
 
         return head->value;
@@ -36,7 +36,7 @@ public:
 
     T back() const {
         if (!tail) {
-            throw std::runtime_error("List is empty");
+            throw std::out_of_range("List is empty");
         }
         return tail->value;
     }
@@ -55,7 +55,7 @@ public:
 
     T pop_back() {
         if (!head) {
-            throw std::runtime_error("List is empty");
+            throw std::out_of_range("List is empty");
         }
 
         T popped_value = tail->value;
@@ -86,6 +86,20 @@ public:
         }
 
         _size++;
+    }
+
+    T pop_front() {
+        if (!head) 
+            throw std::out_of_range("List is empty");
+
+        T popped_value = head->value;
+        head = std::move(head->next);
+        
+        if (!head) 
+            tail = nullptr;
+        
+        _size--;
+        return popped_value;
     }
 
 };
