@@ -21,7 +21,15 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(catch2)
 
 # Add test executable
-add_executable(tests tests/test_doubly_linked_list.cpp)
+add_executable(
+  tests
+  tests/doubly_linked_list/front_and_back.cpp
+  tests/doubly_linked_list/iterator_tests.cpp
+  tests/doubly_linked_list/pop_back_tests.cpp
+  tests/doubly_linked_list/pop_front_tests.cpp
+  tests/doubly_linked_list/push_back_tests.cpp
+  tests/doubly_linked_list/push_front_tests.cpp
+)
 target_link_libraries(tests PRIVATE myproject Catch2::Catch2WithMain)
 
 # Register tests
