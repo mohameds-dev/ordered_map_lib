@@ -12,7 +12,7 @@ A C++ project implementing an ordered map using a doubly-linked list to maintain
 - [GitHub Actions CI](#github-actions-ci)
 - [Adding a New Test](#adding-a-new-test)
 - [Troubleshooting](#troubleshooting)
-- [Example Test File](#example-test-file)
+- [Project Status](#project-status)
 
 ## Prerequisites
 
@@ -43,10 +43,16 @@ ordered_map/
 ├── .clang-format         # Code formatting rules
 ├── include/
 │   ├── doubly_linked_list.hpp    # Doubly-linked list implementation
-│   └── ordered_map.hpp          # (Future) Ordered map implementation
+│   └── ordered_map.hpp          # (Future) Ordered map interface
 ├── src/
 ├── tests/
-│   └── test_doubly_linked_list.cpp  # Catch2 test files
+│   └── doubly_linked_list/      # Test files for doubly linked list
+│       ├── front_and_back.cpp   # Tests for front/back operations
+│       ├── iterator_tests.cpp   # Tests for iterator functionality
+│       ├── pop_back_tests.cpp   # Tests for pop_back operations
+│       ├── pop_front_tests.cpp  # Tests for pop_front operations
+│       ├── push_back_tests.cpp  # Tests for push_back operations
+│       └── push_front_tests.cpp # Tests for push_front operations
 ```
 
 ## Setting Up VS Code (or Cursor)
@@ -107,7 +113,7 @@ ordered_map/
 3. **Run Specific Tests**:
    ```bash
    cd build
-   ./tests --tags [canary]
+   ./tests --tags [tag]
    ```
 
 ## GitHub Actions CI
@@ -122,21 +128,26 @@ ordered_map/
 
 ## Adding a New Test
 
-1. **Edit `tests/test_doubly_linked_list.cpp`**:
+1. **Choose the appropriate test file** in `tests/doubly_linked_list/` based on the functionality being tested:
 
-   - Add a `TEST_CASE` for the doubly-linked list. Example:
-     ```cpp
-     TEST_CASE("Push back maintains order", "[push_back]") {
-         DoublyLinkedList<int> list;
-         list.push_back(1);
-         list.push_back(2);
-         REQUIRE(list.size() == 2);
-         REQUIRE(list.front() == 1);
-         REQUIRE(list.back() == 2);
-     }
-     ```
+   - `front_and_back.cpp` for front/back operations
+   - `iterator_tests.cpp` for iterator functionality
+   - `pop_back_tests.cpp` for pop_back operations
+   - `pop_front_tests.cpp` for pop_front operations
+   - `push_back_tests.cpp` for push_back operations
+   - `push_front_tests.cpp` for push_front operations
 
-2. **Rebuild and Test**:
+2. **Add your test case**:
+
+   ```cpp
+   TEST_CASE("Your test description", "[tag]") {
+       DoublyLinkedList<int> list;
+       // Your test code here
+       REQUIRE(/* your assertion */);
+   }
+   ```
+
+3. **Rebuild and Test**:
    ```bash
    ./build.sh
    ```
@@ -150,33 +161,11 @@ ordered_map/
   - Clear build: `rm -rf build && ./build.sh`.
   - Check prerequisites.
 - **Test Failures**:
-  - Inspect assertions in `test_doubly_linked_list.cpp`.
+  - Inspect assertions in the relevant test file.
   - Run specific tests: `./build/tests --tags [tag]`.
 - **GitHub Actions Failures**:
   - Check logs in the "Actions" tab on GitHub.
   - Ensure `build.sh` and dependencies are compatible with `ubuntu-latest`.
-
-## Example Test File
-
-`tests/test_doubly_linked_list.cpp`:
-
-```cpp
-#include <catch2/catch_test_macros.hpp>
-#include "doubly_linked_list.hpp"
-
-TEST_CASE("Canary test", "[canary]") {
-    REQUIRE(true);
-}
-
-TEST_CASE("Push back maintains order", "[push_back]") {
-    DoublyLinkedList<int> list;
-    list.push_back(1);
-    list.push_back(2);
-    REQUIRE(list.size() == 2);
-    REQUIRE(list.front() == 1);
-    REQUIRE(list.back() == 2);
-}
-```
 
 ## Project Status
 
@@ -186,7 +175,8 @@ The project is currently in development, with the following components:
 
    - Basic operations (push_back, pop_back, push_front, pop_front)
    - Memory management using smart pointers
-   - Comprehensive test coverage
+   - Comprehensive test coverage organized by functionality
+   - Iterator support (basic implementation)
 
 2. 🔄 Ordered Map Implementation (Coming Soon)
    - Will use the doubly linked list as its underlying data structure
