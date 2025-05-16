@@ -102,4 +102,24 @@ public:
         return popped_value;
     }
 
+    class Iterator {
+        Node<T>* current_node_ptr;
+
+        Iterator(Node<T>* a_current) : current_node_ptr(a_current) {}
+        
+        friend class DoublyLinkedList<T>;
+
+    public:
+        bool operator==(const Iterator& other) const {
+            return current_node_ptr == other.current_node_ptr;
+        }
+    };
+
+    Iterator begin() {
+        return Iterator(nullptr);
+    }
+
+    Iterator end() {
+        return Iterator(nullptr);
+    }
 };

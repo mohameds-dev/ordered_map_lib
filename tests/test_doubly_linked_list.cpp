@@ -18,6 +18,12 @@ TEST_CASE("push_back two values in an empty list makes size = 2", "[push_back]")
     REQUIRE(list.size() == 2);
 }
 
+TEST_CASE("push_back 1 and front returns 1", "[push_back]") {
+    DoublyLinkedList<int> list;
+    list.push_back(1);
+    REQUIRE(list.front() == 1);
+}
+
 TEST_CASE("push_back 1, 2 and front returns 1", "[push_back]") {
     DoublyLinkedList<int> list;
     list.push_back(1);
@@ -30,6 +36,12 @@ TEST_CASE("push_back 2, 1 and front returns 2", "[push_back]") {
     list.push_back(2);
     list.push_back(1);
     REQUIRE(list.front() == 2);
+}
+
+TEST_CASE("push_back 1, and back returns 1", "[push_back]") {
+    DoublyLinkedList<int> list;
+    list.push_back(1);
+    REQUIRE(list.back() == 1);
 }
 
 TEST_CASE("push_back 1, 2 and back returns 2", "[push_back]") {
@@ -210,3 +222,7 @@ TEST_CASE("push_back 1, pop_back, push_front 2, pop front returns 2", "[push_bac
     REQUIRE(list.pop_front() == 2);
 }
 
+TEST_CASE("begin iterator equals end iterator in empty list", "[begin, end]") {
+    DoublyLinkedList<int> list;
+    REQUIRE(list.begin() == list.end());
+}
