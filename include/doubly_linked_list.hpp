@@ -113,10 +113,18 @@ public:
         bool operator==(const Iterator& other) const {
             return current_node_ptr == other.current_node_ptr;
         }
+
+        bool operator!=(const Iterator& other) const {
+            return current_node_ptr != other.current_node_ptr;
+        }
+
+        T& operator*() const {
+            return current_node_ptr->value;
+        }
     };
 
     Iterator begin() {
-        return Iterator(nullptr);
+        return Iterator(head.get());
     }
 
     Iterator end() {
