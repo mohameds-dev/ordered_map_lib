@@ -1,4 +1,4 @@
-# Ordered Map
+# Ordered Map (building in progress...)
 
 A C++ project implementing an ordered map using a doubly-linked list to maintain element insertion order, built with CMake, tested with Catch2, and formatted with Clang-Format.
 
