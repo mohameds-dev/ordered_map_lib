@@ -121,6 +121,20 @@ public:
         T& operator*() const {
             return current_node_ptr->value;
         }
+
+        Iterator& operator++() {
+            if (current_node_ptr) {
+                current_node_ptr = current_node_ptr->next.get();
+            }
+            return *this;
+        }
+
+        Iterator operator++(int) {
+            Iterator initial_state_copy = *this;
+            ++(*this);
+            return initial_state_copy;
+        }
+
     };
 
     Iterator begin() {
