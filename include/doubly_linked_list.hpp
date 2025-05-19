@@ -102,6 +102,12 @@ public:
         return popped_value;
     }
 
+    void clear() {
+        _size = 0;
+        head.reset();
+        tail = nullptr;
+    }
+
     class Iterator {
         Node<T>* current_node_ptr;
 
