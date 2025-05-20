@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.10)
-project(MyProject LANGUAGES CXX)
+project(ordered_map LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Add source files
-add_library(myproject src/doubly_linked_list.cpp)
-target_include_directories(myproject PUBLIC include)
+add_library(ordered_map src/doubly_linked_list.cpp)
+target_include_directories(ordered_map PUBLIC include)
 
 # Enable testing
 enable_testing()
@@ -21,8 +21,22 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(catch2)
 
 # Add test executable
-add_executable(tests tests/test_doubly_linked_list.cpp)
-target_link_libraries(tests PRIVATE myproject Catch2::Catch2WithMain)
+add_executable(
+  tests
+  tests/doubly_linked_list/size_tests.cpp
+  tests/doubly_linked_list/front_and_back.cpp
+  tests/doubly_linked_list/iterator_tests.cpp
+  tests/doubly_linked_list/pop_back_tests.cpp
+  tests/doubly_linked_list/pop_front_tests.cpp
+  tests/doubly_linked_list/push_back_tests.cpp
+  tests/doubly_linked_list/push_front_tests.cpp
+  tests/doubly_linked_list/clear_tests.cpp
+  tests/ordered_map/size_tests.cpp
+  tests/ordered_map/insertion_tests.cpp
+  tests/ordered_map/lookup_tests.cpp
+  tests/ordered_map/iterator_tests.cpp
+)
+target_link_libraries(tests PRIVATE ordered_map Catch2::Catch2WithMain)
 
 # Register tests
 include(CTest)
