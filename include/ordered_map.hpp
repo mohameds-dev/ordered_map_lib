@@ -16,6 +16,9 @@ public:
             _map[key] = _list.back_iterator();
             _size++;
         }
+        else {
+            *_map.find(key)->second = value;
+        }
     }
 
     unsigned int size() const {

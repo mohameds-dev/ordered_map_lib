@@ -38,6 +38,14 @@ TEST_CASE("insert <hello, world>, key hello returns value of world", "[insert, a
     REQUIRE(o_map.at("hello") == "world");
 }
 
+TEST_CASE("insert <hello, world>, <hello, there>, key hello returns value of there", "[insert, at]") {
+    ordered_map<std::string, std::string> o_map;
+    o_map.insert("hello", "world");
+    o_map.insert("hello", "there");
+    REQUIRE(o_map.at("hello") == "there");
+}
+
+
 
 
 
