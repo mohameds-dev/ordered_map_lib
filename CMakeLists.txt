@@ -30,7 +30,8 @@ add_executable(
   tests/doubly_linked_list/push_back_tests.cpp
   tests/doubly_linked_list/push_front_tests.cpp
   tests/doubly_linked_list/clear_tests.cpp
-  tests/ordered_map/insertion_test.cpp
+  tests/ordered_map/insertion_tests.cpp
+  tests/ordered_map/lookup_tests.cpp
 )
 target_link_libraries(tests PRIVATE ordered_map Catch2::Catch2WithMain)
 
