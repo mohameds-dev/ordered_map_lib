@@ -24,7 +24,16 @@ public:
     }
 
     V& at(const K& key) {
+        if (_map.find(key) == _map.end()) {
+            throw std::out_of_range("Key not found in ordered map");
+        }
         return *_map[key];
     }
 
+    V& operator[](const K& key) {
+        if (_map.find(key) == _map.end()) {
+            this->insert(key, V{});
+        }
+        return *_map[key];
+    }
 };
