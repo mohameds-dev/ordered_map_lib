@@ -35,6 +35,14 @@ public:
 };
 
 TEST_CASE("calling clear on a list of custom class objects makes the destructor called", "[clear]") {
+    class TestClass {
+    public:
+        bool *ref;
+
+        TestClass(bool *a_ref) : ref(a_ref) {}
+        ~TestClass() { (*ref) = true; }
+    };
+    
     DoublyLinkedList<TestClass> list;
     bool deletion_flag = false;
     list.push_back(TestClass(&deletion_flag));
