@@ -112,3 +112,11 @@ TEST_CASE("insert <1, 2>, back_iterator points to <1, 2>", "[ordered_map_iterato
     REQUIRE(*o_map.back_iterator() == std::make_pair(1, 2));
 }
 
+TEST_CASE("insert <1, 2>, <3, 4>, back_iterator points to <3, 4>", "[ordered_map_iterator]") {
+    ordered_map<int, int> o_map;
+    o_map.insert(1, 2);
+    o_map.insert(3, 4);
+
+    REQUIRE(*o_map.back_iterator() == std::make_pair(3, 4));
+}
+
