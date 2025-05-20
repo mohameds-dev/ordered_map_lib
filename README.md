@@ -184,5 +184,6 @@ The project is currently in development, with the following components:
 
 ### Checklist for future improvements
 
-- [ ] Test front(), back(), insertion and deletion functions for copying behavior
-- [ ] Test front(), back(), insertion and deletion functions for destructor behavior
+- [ ] DoublyLinkedList: Add pre and post decrement operators
+- [ ] DoublyLinkedList: Test front(), back(), insertion and deletion functions for copying behavior
+- [ ] DoublyLinkedList: Test front(), back(), insertion and deletion functions for destructor behavior 
