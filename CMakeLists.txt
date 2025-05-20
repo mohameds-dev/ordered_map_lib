@@ -31,6 +31,7 @@ add_executable(
   tests/doubly_linked_list/push_back_tests.cpp
   tests/doubly_linked_list/push_front_tests.cpp
   tests/doubly_linked_list/clear_tests.cpp
+  tests/ordered_map/size_tests.cpp
   tests/ordered_map/insertion_tests.cpp
   tests/ordered_map/lookup_tests.cpp
   tests/ordered_map/iterator_tests.cpp
