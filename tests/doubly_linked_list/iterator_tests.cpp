@@ -150,3 +150,20 @@ TEST_CASE("push back 1, 2, 3, iterate using for-loop with for-each syntax", "[it
         counter++;
     }
 }
+
+TEST_CASE("push_back 1, dereferencing back iterator returns 1", "[back_iterator]") {
+    DoublyLinkedList<int> list;
+    list.push_back(1);
+    auto it = list.back_iterator();
+
+    REQUIRE(*it == 1);
+}
+
+TEST_CASE("push_back 1, 2, dereferencing back iterator returns 2", "[back_iterator]") {
+    DoublyLinkedList<int> list;
+    list.push_back(1); list.push_back(2);
+    auto it = list.back_iterator();
+
+    REQUIRE(*it == 2);
+}
+

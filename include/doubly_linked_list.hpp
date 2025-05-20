@@ -116,6 +116,8 @@ public:
         friend class DoublyLinkedList<T>;
 
     public:
+        Iterator() : current_node_ptr(nullptr) {}
+        
         bool operator==(const Iterator& other) const {
             return current_node_ptr == other.current_node_ptr;
         }
@@ -141,6 +143,14 @@ public:
             return initial_state_copy;
         }
 
+        Iterator& operator--() {
+            if (current_node_ptr) {
+                current_node_ptr = current_node_ptr->prev;
+            }
+            return *this;
+        }
+
+
     };
 
     Iterator begin() {
@@ -149,5 +159,9 @@ public:
 
     Iterator end() {
         return Iterator(nullptr);
+    }
+
+    Iterator back_iterator() {
+        return Iterator(tail);
     }
 };
