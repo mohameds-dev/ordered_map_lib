@@ -181,3 +181,8 @@ The project is currently in development, with the following components:
 2. 🔄 Ordered Map Implementation (Coming Soon)
    - Will use the doubly linked list as its underlying data structure
    - Will maintain insertion order while providing map-like functionality
+
+### Checklist for future improvements
+
+- [ ] Test front(), back(), insertion and deletion functions for copying behavior
+- [ ] Test front(), back(), insertion and deletion functions for destructor behavior
