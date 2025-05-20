@@ -2,23 +2,23 @@
 #include "doubly_linked_list.hpp"
 
 
-TEST_CASE("begin iterator equals end iterator in empty list", "[begin, end]") {
+TEST_CASE("begin iterator equals end iterator in empty list", "[iterator]") {
     DoublyLinkedList<int> list;
     REQUIRE(list.begin() == list.end());
 }
 
-TEST_CASE("push_back 1, begin iterator does not equal end iterator", "[begin, end]") {
+TEST_CASE("push_back 1, begin iterator does not equal end iterator", "[iterator]") {
     DoublyLinkedList<int> list;
     list.push_back(1);
     REQUIRE(!(list.begin() == list.end()));
 }
 
-TEST_CASE("begin iterator != end iterator returns false in an empty list", "[begin, end]") {
+TEST_CASE("begin iterator != end iterator returns false in an empty list", "[iterator]") {
     DoublyLinkedList<int> list;
     REQUIRE(!(list.begin() != list.end()));
 }
 
-TEST_CASE("push_back 1, begin iterator != end iterator returns false", "[begin, end]") {
+TEST_CASE("push_back 1, begin iterator != end iterator returns false", "[iterator]") {
     DoublyLinkedList<int> list;
     list.push_back(1);
 

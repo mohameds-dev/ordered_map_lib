@@ -29,7 +29,7 @@ TEST_CASE("push_front 1, 2 and front returns 2", "[push_front]") {
     REQUIRE(list.front() == 2);
 }
 
-TEST_CASE("push_front 1, 2, push_back 3, back is 3", "[push_front, push_back]") {
+TEST_CASE("push_front 1, 2, push_back 3, back is 3", "[push_front]") {
     DoublyLinkedList<int> list;
     list.push_front(1);
     list.push_front(2);
@@ -37,7 +37,7 @@ TEST_CASE("push_front 1, 2, push_back 3, back is 3", "[push_front, push_back]") 
     REQUIRE(list.back() == 3);
 }
 
-TEST_CASE("push_back 1, push_front 2, pop_back twice, size is 0", "[push_back, push_front, pop_back]") {
+TEST_CASE("push_back 1, push_front 2, pop_back twice, size is 0", "[push_front]") {
     DoublyLinkedList<int> list;
     list.push_back(1);
     list.push_front(2);

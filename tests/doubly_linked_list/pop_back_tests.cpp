@@ -28,7 +28,7 @@ TEST_CASE("pop_back on an empty list throws an exception", "[pop_back]") {
 }
 
 
-TEST_CASE("push_back 1, 2, pop_back once, size = 1", "[push_back, pop_back]") {
+TEST_CASE("push_back 1, 2, pop_back once, size = 1", "[pop_back]") {
     DoublyLinkedList<int> list;
     list.push_back(1);
     list.push_back(2);
@@ -36,7 +36,7 @@ TEST_CASE("push_back 1, 2, pop_back once, size = 1", "[push_back, pop_back]") {
     REQUIRE(list.size() == 1);
 }
 
-TEST_CASE("push_back 1, 2, 3, pop_back once, back return 2", "[push_back, pop_back]") {
+TEST_CASE("push_back 1, 2, 3, pop_back once, back return 2", "[pop_back]") {
     DoublyLinkedList<int> list;
     list.push_back(1);
     list.push_back(2);
@@ -45,7 +45,7 @@ TEST_CASE("push_back 1, 2, 3, pop_back once, back return 2", "[push_back, pop_ba
     REQUIRE(list.back() == 2);
 }
 
-TEST_CASE("push_back 1, 2, 3, pop_back twice, back return 1", "[push_back, pop_back]") {
+TEST_CASE("push_back 1, 2, 3, pop_back twice, back return 1", "[pop_back]") {
     DoublyLinkedList<int> list;
     list.push_back(1);
     list.push_back(2);
@@ -55,7 +55,7 @@ TEST_CASE("push_back 1, 2, 3, pop_back twice, back return 1", "[push_back, pop_b
     REQUIRE(list.back() == 1);
 }
 
-TEST_CASE("push_back 1, 2, 3, pop_back once, front return 1", "[push_back, pop_back]") {
+TEST_CASE("push_back 1, 2, 3, pop_back once, front return 1", "[pop_back]") {
     DoublyLinkedList<int> list;
     list.push_back(1);
     list.push_back(2);
