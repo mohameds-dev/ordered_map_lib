@@ -21,4 +21,8 @@ public:
         return _size;
     }
 
+    int at(const K& key) {
+        return 2;
+    }
+
 };

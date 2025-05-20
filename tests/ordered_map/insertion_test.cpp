@@ -26,6 +26,11 @@ TEST_CASE("insert <1, 2> and <2, 3>, size = 2", "[insert]") {
     REQUIRE(o_map.size() == 2);
 }
 
+TEST_CASE("insert <1, 2>, key 1 returns value of 2", "[insert]") {
+    ordered_map<int, int> o_map;
+    o_map.insert(1, 2);
+    REQUIRE(o_map.at(1) == 2);
+}
 
 
 
