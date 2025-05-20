@@ -91,15 +91,17 @@ TEST_CASE("push_back 1, 2, using post-increment (it++) on begin iterator to reac
     REQUIRE(*it == 2);
 }
 
-TEST_CASE("push_back 1, 2, 3, using post-increment (it++) on begin iterator to reach 2", "[iterator]") {
+TEST_CASE("push_back 1, 2, 3, using post-increment (it++) on begin iterator twice to reach 3", "[iterator]") {
     DoublyLinkedList<int> list;
     list.push_back(1);
     list.push_back(2);
     list.push_back(3);
     auto it = list.begin();
     it++;
+    it++;
 
-    REQUIRE(*it == 2);
+
+    REQUIRE(*it == 3);
 }
 
 TEST_CASE("push_back 1, 2, copy the iterator after using post-increment (it++) on begin iterator", "[iterator]") {
