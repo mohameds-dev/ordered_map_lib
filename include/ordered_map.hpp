@@ -83,6 +83,17 @@ public:
     Iterator end() {
         return Iterator(_list.end());
     }
+
+    bool empty() {
+        return _list.empty();
+    }
+
+    Iterator back_iterator() {
+        if (empty()) {
+            throw std::out_of_range("Map is empty");
+        }
+        return Iterator(_list.back_iterator());
+    }
     
 
 };
