@@ -184,6 +184,9 @@ The project is currently in development, with the following components:
 
 ### Checklist for future improvements
 
+- [ ] DoublyLinkedList: Add tests for copying & moving
+- [ ] DoublyLinkedList: Add `erase` method to erase elements given their iterator
+
 - [ ] DoublyLinkedList: Add pre and post decrement operators
 - [ ] DoublyLinkedList: Test front(), back(), insertion and deletion functions for copying behavior
 - [ ] DoublyLinkedList: Test front(), back(), insertion and deletion functions for destructor behavior
