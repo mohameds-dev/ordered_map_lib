@@ -25,3 +25,19 @@ TEST_CASE("calling clear on a non-empty list then accessing the back throws an e
     REQUIRE_THROWS_AS(list.back(), std::out_of_range);
 }
 
+
+class TestClass {
+public:
+    bool *ref;
+
+    TestClass(bool *a_ref) : ref(a_ref) {}
+    ~TestClass() { (*ref) = true; }
+};
+
+TEST_CASE("calling clear on a list of custom class objects makes the destructor called", "[clear]") {
+    DoublyLinkedList<TestClass> list;
+    bool deletion_flag = false;
+    list.push_back(TestClass(&deletion_flag));
+    list.clear();
+    REQUIRE(deletion_flag == true);
+}
