@@ -2,20 +2,28 @@
 #include "doubly_linked_list.hpp"
 #include <unordered_map>
 
-template <typename K, typename V>
+
+
+template <typename KeyType, typename ValueType>
 class ordered_map {
 private:
-    DoublyLinkedList<V> _list;
-    std::unordered_map<K, typename DoublyLinkedList<V>::Iterator> _map;
+
+    DoublyLinkedList<std::pair<KeyType, ValueType>> _list;
+
+    using ListIterator = typename DoublyLinkedList<std::pair<KeyType, ValueType>>::Iterator;
+
+    std::unordered_map<KeyType, ListIterator> _map;
+
+    
 public:
     ordered_map() {}
-    void insert(const K& key, const V& value) {
+    void insert(const KeyType& key, const ValueType& value) {
         if (_map.find(key) == _map.end()) {
-            _list.push_back(value);
+            _list.push_back(std::make_pair(key, value));
             _map[key] = _list.back_iterator();
         }
         else {
-            *_map.find(key)->second = value;
+            *_map.find(key)->second = std::make_pair(key, value);
         }
     }
 
@@ -23,19 +31,47 @@ public:
         return _list.size();
     }
 
-    V& at(const K& key) {
+    ValueType& at(const KeyType& key) {
         if (_map.find(key) == _map.end()) {
             throw std::out_of_range("Key not found in ordered map");
         }
-        return *_map[key];
+        return (*_map[key]).second;
     }
 
-    V& operator[](const K& key) {
+    ValueType& operator[](const KeyType& key) {
         if (_map.find(key) == _map.end()) {
-            this->insert(key, V{});
+            this->insert(key, ValueType{});
         }
-        return *_map[key];
+        return (*_map[key]).second;
     }
 
-    
+    class Iterator {
+        ListIterator _it;
+
+        public:
+        Iterator(ListIterator it) : _it(it) {}
+
+        std::pair<KeyType, ValueType>& operator*() {
+            return *_it;
+        }
+
+        Iterator& operator++() {
+            _it++;
+            return *this;
+        }
+
+        Iterator operator++(int) {
+            Iterator initial_state_copy = *this;
+            _it++;
+            return initial_state_copy;
+        }
+
+
+        
+    };
+
+    Iterator begin() {
+        return Iterator(_list.begin());
+    }
+
 };
