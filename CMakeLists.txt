@@ -23,6 +23,7 @@ FetchContent_MakeAvailable(catch2)
 # Add test executable
 add_executable(
   tests
+  tests/doubly_linked_list/size_tests.cpp
   tests/doubly_linked_list/front_and_back.cpp
   tests/doubly_linked_list/iterator_tests.cpp
   tests/doubly_linked_list/pop_back_tests.cpp

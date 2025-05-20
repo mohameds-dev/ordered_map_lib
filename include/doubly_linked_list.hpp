@@ -49,7 +49,6 @@ public:
             tail->next = std::make_unique<Node<T>>(value, tail, nullptr);
             tail = tail->next.get();
         }
-
         _size++;
     }
 
@@ -70,7 +69,6 @@ public:
         }
 
         _size--;
-
         return popped_value;
     }
 
@@ -78,19 +76,18 @@ public:
         if (!head) {
             head = std::make_unique<Node<T>>(value, nullptr, nullptr);
             tail = head.get();
-        }
-        else {
+        } else {
             auto new_node = std::make_unique<Node<T>>(value, nullptr, std::move(head));
             new_node->next->prev = new_node.get();
             head = std::move(new_node);
         }
-
         _size++;
     }
 
     T pop_front() {
-        if (!head) 
+        if (!head) {
             throw std::out_of_range("List is empty");
+        }
 
         T popped_value = head->value;
         head = std::move(head->next);
@@ -106,6 +103,10 @@ public:
         _size = 0;
         head.reset();
         tail = nullptr;
+    }
+
+    bool empty() const {
+        return _size == 0;
     }
 
     class Iterator {
@@ -149,8 +150,6 @@ public:
             }
             return *this;
         }
-
-
     };
 
     Iterator begin() {
