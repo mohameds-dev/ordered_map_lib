@@ -1,7 +1,7 @@
 #pragma once
 #include "doubly_linked_list.hpp"
 #include <unordered_map>
-
+#include <stdexcept>
 
 
 template <typename KeyType, typename ValueType>

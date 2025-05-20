@@ -1,5 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 #include "../include/ordered_map.hpp"
+#include <stdexcept>
 
 TEST_CASE("insert <1, 2>, begin iterator points to <1, 2>", "[ordered_map_iterator]") {
     OrderedMap<int, int> o_map;

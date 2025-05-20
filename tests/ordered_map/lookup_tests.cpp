@@ -1,5 +1,6 @@
 #include "ordered_map.hpp"
 #include <catch2/catch_test_macros.hpp>
+#include <stdexcept>
 
 TEST_CASE("insert <1, 2>, key 1 returns value of 2", "[at]") {
     OrderedMap<int, int> o_map;

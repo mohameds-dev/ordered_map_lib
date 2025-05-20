@@ -1,6 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 #include "doubly_linked_list.hpp"
-
+#include <stdexcept>
 
 TEST_CASE("push_back 1, pop_back once, size = 0", "[pop_back]") {
     DoublyLinkedList<int> list;

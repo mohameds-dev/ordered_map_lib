@@ -1,6 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 #include "doubly_linked_list.hpp"
-
+#include <stdexcept>
 
 TEST_CASE("calling clear method on a non-empty list makes size = 0", "[clear]") {
     DoublyLinkedList<int> list;
