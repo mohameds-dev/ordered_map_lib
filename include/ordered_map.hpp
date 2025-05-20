@@ -66,12 +66,23 @@ public:
             return initial_state_copy;
         }
 
+        bool operator==(const Iterator& other) const {
+            return _it == other._it;
+        }
 
+        bool operator!=(const Iterator& other) const {
+            return !(*this == other);
+        }
         
     };
 
     Iterator begin() {
         return Iterator(_list.begin());
     }
+
+    Iterator end() {
+        return Iterator(_list.end());
+    }
+    
 
 };
