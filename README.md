@@ -187,3 +187,58 @@ The project is currently in development, with the following components:
 - [ ] DoublyLinkedList: Add pre and post decrement operators
 - [ ] DoublyLinkedList: Test front(), back(), insertion and deletion functions for copying behavior
 - [ ] DoublyLinkedList: Test front(), back(), insertion and deletion functions for destructor behavior 
+
+## Tests
+
+### Doubly Linked List Tests
+
+#### Front and Back Operations
+- [x] Empty list has size 0
+- [x] Empty list front() throws exception
+- [x] Empty list back() throws exception
+- [x] List with one element returns correct front
+- [x] List with one element returns correct back
+- [x] List with multiple elements returns correct front
+- [x] List with multiple elements returns correct back
+
+#### Iterator Operations  
+- [x] Empty list begin equals end
+- [x] Single element list begin points to element
+- [x] Single element list begin++ equals end
+- [x] Multiple element list begin points to first
+- [x] Multiple element list begin++ points to second
+- [x] Multiple element list can iterate through all elements
+
+#### Push Back Operations
+- [x] Push back one element increases size to 1
+- [x] Push back multiple elements increases size correctly
+- [x] Push back maintains correct order of elements
+
+#### Push Front Operations
+- [x] Push front one element increases size to 1
+- [x] Push front multiple elements increases size correctly
+- [x] Push front maintains correct order of elements
+
+#### Pop Back Operations
+- [x] Pop back on empty list throws exception
+- [x] Pop back decreases size by 1
+- [x] Pop back removes last element
+- [x] Pop back maintains remaining elements
+
+#### Pop Front Operations
+- [x] Pop front on empty list throws exception
+- [x] Pop front decreases size by 1
+- [x] Pop front removes first element
+- [x] Pop front maintains remaining elements
+
+### Ordered Map Tests
+
+#### Insertion Operations
+- [x] Empty ordered map has size 0
+- [x] Inserting <1,2> into empty map sets size to 1
+- [x] Inserting duplicate key maintains size of 1
+- [x] Inserting different keys increases size
+- [x] Inserting <1,2> allows retrieving 2 with key 1
+- [x] Inserting string key-value pairs works correctly
+- [x] Updating existing key updates the value
+
