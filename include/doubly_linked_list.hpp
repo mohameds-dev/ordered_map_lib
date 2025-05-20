@@ -21,6 +21,9 @@ private:
 
 public:
     DoublyLinkedList() : head(nullptr), tail(nullptr), _size(0) {}
+    ~DoublyLinkedList() {
+        clear();
+    }
 
     int size() const {
         return _size;
@@ -100,9 +103,9 @@ public:
     }
 
     void clear() {
-        _size = 0;
-        head.reset();
-        tail = nullptr;
+        while(size() > 0) {
+            pop_back();
+        }
     }
 
     bool empty() const {

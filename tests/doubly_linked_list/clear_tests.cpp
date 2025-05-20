@@ -49,3 +49,13 @@ TEST_CASE("calling clear on a list of custom class objects makes the destructor 
     list.clear();
     REQUIRE(deletion_flag == true);
 }
+
+TEST_CASE("calling clear after pushing 100 elements makes size = 0", "[size]") {
+    DoublyLinkedList<int> list;
+    for (int i = 0; i < 100; i++) {
+        list.push_back(i);
+    }
+    REQUIRE(list.size() == 100);
+    list.clear();
+    REQUIRE(list.size() == 0);
+}
