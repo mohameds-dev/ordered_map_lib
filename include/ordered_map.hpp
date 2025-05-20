@@ -5,7 +5,7 @@
 
 
 template <typename KeyType, typename ValueType>
-class ordered_map {
+class OrderedMap {
 private:
 
     DoublyLinkedList<std::pair<KeyType, ValueType>> _list;
@@ -16,7 +16,7 @@ private:
 
     
 public:
-    ordered_map() {}
+    OrderedMap() {}
     void insert(const KeyType& key, const ValueType& value) {
         if (_map.find(key) == _map.end()) {
             _list.push_back(std::make_pair(key, value));
