@@ -12,6 +12,7 @@ public:
     ordered_map() {}
     void insert(const K& key, const V& value) {
         if (_map.find(key) == _map.end()) {
+            _list.push_back(value);
             _map[key] = _list.back_iterator();
             _size++;
         }
@@ -21,8 +22,8 @@ public:
         return _size;
     }
 
-    int at(const K& key) {
-        return 2;
+    V& at(const K& key) {
+        return *_map[key];
     }
 
 };
