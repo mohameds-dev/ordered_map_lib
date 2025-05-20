@@ -56,4 +56,17 @@ TEST_CASE("using operator[hello] on a key that does not exist in the map assigns
     REQUIRE(o_map.at("hello") == std::string());
 }
 
+TEST_CASE("insert <key, value>, using operator[key] allows updating the value to another value", "[square_brackets]") {
+    ordered_map<std::string, std::string> o_map;
+    o_map.insert("key", "value");
+    o_map["key"] = "new value";
+    REQUIRE(o_map.at("key") == "new value");
+}
+
+TEST_CASE("updating an existing key does not affect the size of the map", "[square_brackets]") {
+    ordered_map<std::string, std::string> o_map;
+    o_map.insert("key", "value");
+    o_map["key"] = "new value";
+    REQUIRE(o_map.size() == 1);
+}
 
