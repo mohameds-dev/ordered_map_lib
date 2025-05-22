@@ -17,6 +17,20 @@ private:
     
 public:
     OrderedMap() {}
+
+    OrderedMap(std::initializer_list<std::pair<const KeyType, ValueType>> init_list){
+        for (const auto& pair : init_list) {
+            insert(pair.first, pair.second);
+        }
+    }
+
+    template <typename ParamIterator>
+    OrderedMap(ParamIterator begin, ParamIterator end){
+        for (auto it = begin; it != end; it++) {
+            insert(it->first, it->second);
+        }
+    }
+
     void insert(const KeyType& key, const ValueType& value) {
         if (_map.find(key) == _map.end()) {
             _list.push_back(std::make_pair(key, value));
@@ -55,6 +69,10 @@ public:
             return *_it;
         }
 
+        std::pair<KeyType, ValueType>* operator->() {
+            return &(*_it);
+        }
+
         Iterator& operator++() {
             _it++;
             return *this;
@@ -73,6 +91,7 @@ public:
         bool operator!=(const Iterator& other) const {
             return !(*this == other);
         }
+        
         
     };
 
