@@ -4,9 +4,9 @@ project(ordered_map LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Add source files
-add_library(ordered_map src/doubly_linked_list.cpp)
-target_include_directories(ordered_map PUBLIC include)
+# Create an INTERFACE library since this is header-only
+add_library(ordered_map INTERFACE)
+target_include_directories(ordered_map INTERFACE include)
 
 # Enable testing
 enable_testing()

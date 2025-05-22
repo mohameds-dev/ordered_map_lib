@@ -1,9 +1,12 @@
-# Ordered Map (building in progress...)
+# Ordered Map Library
 
-A C++ project implementing an ordered map using a doubly-linked list to maintain element insertion order, built with CMake, tested with Catch2, and formatted with Clang-Format.
+A C++ implementation of an ordered map data structure that maintains insertion order while providing O(1) key-value lookups.
 
 ## Table of Contents
 
+- [Features](#features)
+- [Usage](#usage)
+- [Implementation Details](#implementation-details)
 - [Prerequisites](#prerequisites)
 - [Project Structure](#project-structure)
 - [Setting Up VS Code (or Cursor)](#setting-up-vs-code-or-cursor)
@@ -11,8 +14,47 @@ A C++ project implementing an ordered map using a doubly-linked list to maintain
 - [Building and Running Tests](#building-and-running-tests)
 - [GitHub Actions CI](#github-actions-ci)
 - [Adding a New Test](#adding-a-new-test)
-- [Troubleshooting](#troubleshooting)
-- [Project Status](#project-status)
+- [Future Improvements](#future-improvements)
+
+## Features
+
+- Maintains insertion order of key-value pairs
+- O(1) key-value lookups using hash table
+- O(1) insertion and deletion operations
+- STL-like iterator interface
+- Memory safe with smart pointers
+- Exception handling for out-of-range access
+
+## Usage
+
+```cpp
+#include "ordered_map.hpp"
+
+// Create an ordered map
+OrderedMap<std::string, int> map;
+
+// Insert key-value pairs
+map.insert("apple", 1);
+map.insert("banana", 2);
+map.insert("cherry", 3);
+
+// Access values
+int value = map["apple"];  // Returns 1
+
+// Iterate in insertion order
+for (const auto& pair : map) {
+    std::cout << pair.first << ": " << pair.second << std::endl;
+}
+```
+
+## Implementation Details
+
+The implementation uses a combination of:
+
+- Doubly linked list for maintaining insertion order
+- Hash table (std::unordered_map) for O(1) lookups
+- Smart pointers for memory management
+- STL-compatible iterator interface
 
 ## Prerequisites
 
@@ -43,7 +85,7 @@ ordered_map/
 ├── .clang-format         # Code formatting rules
 ├── include/
 │   ├── doubly_linked_list.hpp    # Doubly-linked list implementation
-│   └── ordered_map.hpp          # (Future) Ordered map interface
+│   └── ordered_map.hpp          # Ordered map interface
 ├── src/
 ├── tests/
 │   └── doubly_linked_list/      # Test files for doubly linked list
@@ -152,41 +194,20 @@ ordered_map/
    ./build.sh
    ```
 
-## Troubleshooting
+## Future Improvements
 
-- **Squiggly Lines**:
-  - Ensure `build/compile_commands.json` exists (via `build.sh`).
-  - Verify `.vscode/settings.json` paths.
-- **Build Errors**:
-  - Clear build: `rm -rf build && ./build.sh`.
-  - Check prerequisites.
-- **Test Failures**:
-  - Inspect assertions in the relevant test file.
-  - Run specific tests: `./build/tests --tags [tag]`.
-- **GitHub Actions Failures**:
-  - Check logs in the "Actions" tab on GitHub.
-  - Ensure `build.sh` and dependencies are compatible with `ubuntu-latest`.
+- [ ] Add const iterators
+- [ ] Add reverse iterators
+- [ ] Add range-based operations
+- [ ] Add performance benchmarks
+- [ ] Add support for custom allocators
+- [ ] Add std::move and copying semantics
+- [ ] **DoublyLinkedList:** Add tests for copying & moving
+- [ ] **DoublyLinkedList:** Add `erase` method to erase elements given their iterator
+- [ ] **DoublyLinkedList:** Add pre and post decrement operators
+- [ ] **DoublyLinkedList:** Test front(), back(), insertion and deletion functions for copying behavior
+- [ ] **OrderedMap:** Add support for initializing map with 
+- [ ] **OrderedMap:** Add support for custom hash functions
+- [ ] **OrderedMap:** Add `erase` method to erase elements given their iterator or key
+- [ ] Test for memory leaks
 
-## Project Status
-
-The project is currently in development, with the following components:
-
-1. ✅ Doubly Linked List Implementation
-
-   - Basic operations (push_back, pop_back, push_front, pop_front)
-   - Memory management using smart pointers
-   - Comprehensive test coverage organized by functionality
-   - Iterator support (basic implementation)
-
-2. 🔄 Ordered Map Implementation (Coming Soon)
-   - Will use the doubly linked list as its underlying data structure
-   - Will maintain insertion order while providing map-like functionality
-
-### Checklist for future improvements
-
-- [ ] DoublyLinkedList: Add tests for copying & moving
-- [ ] DoublyLinkedList: Add `erase` method to erase elements given their iterator
-
-- [ ] DoublyLinkedList: Add pre and post decrement operators
-- [ ] DoublyLinkedList: Test front(), back(), insertion and deletion functions for copying behavior
-- [ ] DoublyLinkedList: Test front(), back(), insertion and deletion functions for destructor behavior
