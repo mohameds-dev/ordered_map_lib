@@ -194,7 +194,9 @@ ordered_map/
    ./build.sh
    ```
 
-## Future Improvements
+## Future Features
+
+- [ ] Add `move_to_front` and `move_to_back` operations in ordered_map to re-order entries (without affecting or copying the entry value)
 
 - [ ] Add const iterators
 - [ ] Add reverse iterators
@@ -206,8 +208,7 @@ ordered_map/
 - [ ] **DoublyLinkedList:** Add `erase` method to erase elements given their iterator
 - [ ] **DoublyLinkedList:** Add pre and post decrement operators
 - [ ] **DoublyLinkedList:** Test front(), back(), insertion and deletion functions for copying behavior
-- [ ] **OrderedMap:** Add support for initializing map with 
+- [ ] **OrderedMap:** Add support for initializing map with
 - [ ] **OrderedMap:** Add support for custom hash functions
 - [ ] **OrderedMap:** Add `erase` method to erase elements given their iterator or key
 - [ ] Test for memory leaks
-
