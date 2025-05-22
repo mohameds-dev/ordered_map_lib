@@ -19,6 +19,15 @@ TEST_CASE("size is 2 after inserting two elements", "[size]") {
     REQUIRE(map.size() == 2);
 }
 
+TEST_CASE("size is 100,000 after inserting 100,000 elements", "[size]") {
+    OrderedMap<int, int> map;
+    int size = int(1e5);
+    for (int i = 0; i < size; i++) {
+        map.insert(i, i);
+    }
+    REQUIRE(map.size() == size);
+}
+
 TEST_CASE("empty() returns true when map is empty", "[empty]") {
     OrderedMap<int, int> map;
     REQUIRE(map.empty());
@@ -29,5 +38,3 @@ TEST_CASE("empty() returns false when map is not empty", "[empty]") {
     map.insert(1, 2);
     REQUIRE(!map.empty());
 }
-
-
