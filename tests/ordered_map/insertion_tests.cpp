@@ -26,6 +26,14 @@ TEST_CASE("insert <1, 2> and <2, 3>, size = 2", "[insert]") {
     REQUIRE(o_map.size() == 2);
 }
 
+TEST_CASE("insert {1, 2} into the map 3 times, size = 1", "[insert]"){
+    OrderedMap<int, int> o_map;
+    o_map.insert(1, 2);
+    o_map.insert(1, 2);
+    o_map.insert(1, 2);
+
+    REQUIRE(o_map.size() == 1);
+}
 
 
 
