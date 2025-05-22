@@ -69,6 +69,10 @@ public:
             return *_it;
         }
 
+        std::pair<KeyType, ValueType>* operator->() {
+            return &(*_it);
+        }
+
         Iterator& operator++() {
             _it++;
             return *this;
@@ -87,6 +91,7 @@ public:
         bool operator!=(const Iterator& other) const {
             return !(*this == other);
         }
+        
         
     };
 
