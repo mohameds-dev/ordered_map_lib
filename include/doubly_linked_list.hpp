@@ -10,12 +10,12 @@ struct Node {
     Node* prev;
 
     template<typename U>
-    Node(U&& a_value, Node* a_prev, std::unique_ptr<Node> a_next)
-        : value(std::forward<U>(a_value)), prev(a_prev), next(std::move(a_next)) {}
+    Node(Node* prev_node, std::unique_ptr<Node> next_node, U&& value)
+        : value(std::forward<U>(value)), prev(prev_node), next(std::move(next_node)) {}
 
     template <typename... Args>
-    Node(Node* p, std::unique_ptr<Node> n, Args&&... args)
-    : value(std::forward<Args>(args)...), prev(p), next(std::move(n)) {}
+    Node(Node* prev_node, std::unique_ptr<Node> next_node, Args&&... args)
+        : value(std::forward<Args>(args)...), prev(prev_node), next(std::move(next_node)) {}
 
 };
 
