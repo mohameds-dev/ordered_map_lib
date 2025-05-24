@@ -218,4 +218,17 @@ public:
         return it;
     }
 
+    void move_to_begin(Iterator it) {
+        if (empty()) throw std::out_of_range("List is empty");
+        if (it == end()) throw std::out_of_range("Invalid iterator");
+        if (it == begin()) return;
+
+        if (it == back_iterator()) {
+            push_front(pop_back());
+        }
+        else {
+            push_front(erase_middle_node(it.current_node_ptr));
+        }
+    }
+
 };
