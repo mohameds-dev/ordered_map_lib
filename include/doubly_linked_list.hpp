@@ -10,12 +10,12 @@ struct Node {
     Node* prev;
 
     template<typename U>
-    Node(U&& a_value, Node* a_prev, std::unique_ptr<Node> a_next)
+    Node(Node* a_prev, std::unique_ptr<Node> a_next, U&& a_value)
         : value(std::forward<U>(a_value)), prev(a_prev), next(std::move(a_next)) {}
 
     template <typename... Args>
-    Node(Node* p, std::unique_ptr<Node> n, Args&&... args)
-    : value(std::forward<Args>(args)...), prev(p), next(std::move(n)) {}
+    Node(Node* a_prev, std::unique_ptr<Node> a_next, Args&&... args)
+        : value(std::forward<Args>(args)...), prev(a_prev), next(std::move(a_next)) {}
 
 };
 
@@ -40,13 +40,13 @@ private:
 
     template<typename U>
     void push_back_internal(U&& value) {
-        auto new_node = std::make_unique<Node<T>>(std::forward<U>(value), tail, nullptr);
+        auto new_node = std::make_unique<Node<T>>(tail, nullptr, std::forward<U>(value));
         link_new_back_node(std::move(new_node));
     }
 
     template<typename U>
     void push_front_internal(U&& value) {
-        auto new_node = std::make_unique<Node<T>>(std::forward<U>(value), nullptr, std::move(head));
+        auto new_node = std::make_unique<Node<T>>(nullptr, std::move(head), std::forward<U>(value));
         if (new_node->next) {
             new_node->next->prev = new_node.get();
         }

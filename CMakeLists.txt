@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.10)
-project(ordered_map LANGUAGES CXX)
+project(ordered_map_lib)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Create an INTERFACE library since this is header-only
-add_library(ordered_map INTERFACE)
-target_include_directories(ordered_map INTERFACE include)
+add_library(ordered_map_lib INTERFACE)
+target_include_directories(ordered_map_lib INTERFACE include)
 
 # Enable testing
 enable_testing()
@@ -43,9 +43,12 @@ add_executable(
   tests/ordered_map/find_tests.cpp
   tests/ordered_map/move_to_front_tests.cpp
 )
-target_link_libraries(tests PRIVATE ordered_map Catch2::Catch2WithMain)
+target_link_libraries(tests PRIVATE ordered_map_lib Catch2::Catch2WithMain)
 
 # Register tests
 include(CTest)
 include(Catch)
 catch_discover_tests(tests)
+
+add_executable(main src/main.cpp)
+target_link_libraries(main PRIVATE ordered_map_lib)
