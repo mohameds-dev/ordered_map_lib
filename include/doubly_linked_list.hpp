@@ -9,8 +9,9 @@ struct Node {
     std::unique_ptr<Node> next;
     Node* prev;
 
-    Node(const T& a_value, Node* a_prev, std::unique_ptr<Node> a_next)
-        : value(a_value), prev(a_prev), next(std::move(a_next)) {}
+    template<typename U>
+    Node(U&& a_value, Node* a_prev, std::unique_ptr<Node> a_next)
+        : value(std::forward<U>(a_value)), prev(a_prev), next(std::move(a_next)) {}
 };
 
 template <typename T>
@@ -45,15 +46,26 @@ public:
         return tail->value;
     }
 
-    void push_back(const T& value) {
+    template<typename U>
+    void push_back_internal(U&& value) {
+        auto new_node = std::make_unique<Node<T>>(std::forward<U>(value), tail, nullptr);
         if (!head) {
-            head = std::make_unique<Node<T>>(value, nullptr, nullptr);
+            head = std::move(new_node);
             tail = head.get();
         } else {
-            tail->next = std::make_unique<Node<T>>(value, tail, nullptr);
+            tail->next = std::move(new_node);
+            tail->next->prev = tail;
             tail = tail->next.get();
         }
-        _size++;
+        ++_size;
+    }
+
+    void push_back(T&& value) {
+        push_back_internal(std::move(value));
+    }
+
+    void push_back(const T& value) {
+        push_back_internal(value);
     }
 
     T pop_back() {

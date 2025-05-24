@@ -57,3 +57,27 @@ TEST_CASE("push_back 2, 1 and back returns 1", "[push_back]") {
     list.push_back(1);
     REQUIRE(list.back() == 1);
 }
+
+class MoveCopyFlag {
+        public:
+        std::string state;
+        MoveCopyFlag() : state("default") {}
+        MoveCopyFlag(const MoveCopyFlag& other) : state(other.state + ", copied") {}
+        MoveCopyFlag(MoveCopyFlag&& other) : state(other.state + ", moved") {}
+    };
+
+TEST_CASE("using move with push_back does not copy the value", "[push_back]") {
+    DoublyLinkedList<MoveCopyFlag> list;
+    auto object = MoveCopyFlag();
+    list.push_back(std::move(object));
+
+    REQUIRE(list.back().state == "default, moved");
+}
+
+TEST_CASE("using push_back directly copies the value", "[push_back]") {
+    DoublyLinkedList<MoveCopyFlag> list;
+    auto object = MoveCopyFlag();
+    list.push_back(object);
+
+    REQUIRE(list.back().state == "default, copied");
+}
