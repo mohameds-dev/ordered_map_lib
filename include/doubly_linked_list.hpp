@@ -50,11 +50,50 @@ private:
     }
     
     T erase_middle_node(Node<T>* node) {
-        T value = node->value;
+        T value = std::move(node->value);
         node->next->prev = node->prev;
         node->prev->next = std::move(node->next);
         _size--;
         return value;
+    }
+
+    std::unique_ptr<Node<T>> extract_node_and_link_prev_with_next(Node<T>* node) {
+        std::unique_ptr<Node<T>> extracted;
+        
+        if (node->next) {
+            node->next->prev = node->prev;
+        } else {
+            tail = node->prev;
+        }
+        
+        if (node->prev) {
+            extracted = std::move(node->prev->next);
+            node->prev->next = std::move(node->next);
+        } else {
+            extracted = std::move(head);
+            head = std::move(node->next);
+        }
+
+        return extracted;
+    }
+
+    void emplace_node_before(std::unique_ptr<Node<T>> node, Node<T>* position) {
+        if (position == head.get()) {
+            node->next = std::move(head);
+            if (node->next) node->next->prev = node.get();
+            head = std::move(node);
+        }
+        else if (position == nullptr) {
+            node->prev = tail;
+            tail = node.get();
+            node->prev->next = std::move(node);
+        }
+        else {
+            node->prev = position->prev;
+            node->next = std::move(position->prev->next);
+            position->prev = node.get();
+            node->prev->next = std::move(node);
+        }
     }
 
 public:
@@ -109,7 +148,7 @@ public:
             throw std::out_of_range("List is empty");
         }
 
-        T popped_value = tail->value;
+        T popped_value = std::move(tail->value);
 
         if (tail == head.get()) {
             head.reset();
@@ -137,7 +176,7 @@ public:
             throw std::out_of_range("List is empty");
         }
 
-        T popped_value = head->value;
+        T popped_value = std::move(head->value);
         head = std::move(head->next);
         
         if (!head) 
@@ -235,12 +274,8 @@ public:
         if (it == end()) throw std::out_of_range("Invalid iterator");
         if (it == begin()) return;
 
-        if (it == back_iterator()) {
-            push_front(pop_back());
-        }
-        else {
-            push_front(erase_middle_node(it.current_node_ptr));
-        }
+        auto extracted = extract_node_and_link_prev_with_next(it.current_node_ptr);
+        emplace_node_before(std::move(extracted), head.get());
     }
 
 };
