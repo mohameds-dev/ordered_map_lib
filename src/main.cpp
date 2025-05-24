@@ -1,7 +1,8 @@
 #include "ordered_map.hpp"
 #include <iostream>
+
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+
     // Create an ordered map
     OrderedMap<std::string, int> map;
 

@@ -30,21 +30,27 @@ A C++ implementation of an ordered map data structure that maintains insertion o
 
 ```cpp
 #include "ordered_map.hpp"
+#include <iostream>
 
-// Create an ordered map
-OrderedMap<std::string, int> map;
+int main() {
 
-// Insert key-value pairs
-map.insert("apple", 1);
-map.insert("banana", 2);
-map.insert("cherry", 3);
+    // Create an ordered map
+    OrderedMap<std::string, int> map;
 
-// Access values
-int value = map["apple"];  // Returns 1
+    // Insert key-value pairs
+    map.insert("apple", 1);
+    map.insert("banana", 2);
+    map.insert("cherry", 3);
 
-// Iterate in insertion order
-for (const auto& pair : map) {
-    std::cout << pair.first << ": " << pair.second << std::endl;
+    // Access values
+    int value = map["apple"];  // Returns 1
+
+    // Iterate in insertion order
+    for (const auto& pair : map) {
+        std::cout << pair.first << ": " << pair.second << std::endl;
+    }
+    
+    return 0;
 }
 ```
 
