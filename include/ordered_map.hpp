@@ -118,4 +118,11 @@ public:
         return _map.find(key) == _map.end() ? end() : Iterator(_map[key]);
     }
 
+    void move_to_front(const KeyType& key) {
+        if (_map.find(key) == _map.end()) {
+            throw std::out_of_range("Key not found in ordered map");
+        }
+        _list.push_front(std::make_pair(key, std::move(at(key))));
+        _list.erase(_map[key]);
+    }
 };
