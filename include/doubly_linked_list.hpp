@@ -12,6 +12,11 @@ struct Node {
     template<typename U>
     Node(U&& a_value, Node* a_prev, std::unique_ptr<Node> a_next)
         : value(std::forward<U>(a_value)), prev(a_prev), next(std::move(a_next)) {}
+
+    template <typename... Args>
+    Node(Node* p, std::unique_ptr<Node> n, Args&&... args)
+    : value(std::forward<Args>(args)...), prev(p), next(std::move(n)) {}
+
 };
 
 template <typename T>
@@ -187,7 +192,7 @@ public:
     }
 
     void clear() {
-        while(size() > 0) {
+        while(head) {
             pop_back();
         }
     }
@@ -277,5 +282,21 @@ public:
         auto extracted = extract_node_and_link_prev_with_next(it.current_node_ptr);
         emplace_node_before(std::move(extracted), head.get());
     }
+
+    template <typename... Args>
+    void emplace_back(Args&&... args) {
+        auto new_node = std::make_unique<Node<T>>(tail, nullptr, std::forward<Args>(args)...);
+        
+        if (!head) {
+            head = std::move(new_node);
+            tail = head.get();
+        } else {
+            tail->next = std::move(new_node);
+            tail->next->prev = tail;
+            tail = tail->next.get();
+        }
+        ++_size;
+    }
+
 
 };
