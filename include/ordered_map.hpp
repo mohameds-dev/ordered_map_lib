@@ -113,6 +113,9 @@ public:
         }
         return Iterator(_list.back_iterator());
     }
-    
+
+    Iterator find(const KeyType& key) {
+        return _map.find(key) == _map.end() ? end() : Iterator(_map[key]);
+    }
 
 };
