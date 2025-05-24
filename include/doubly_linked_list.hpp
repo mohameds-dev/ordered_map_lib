@@ -49,6 +49,13 @@ private:
         _size++;
     }
     
+    T erase_middle_node(Node<T>* node) {
+        T value = node->value;
+        node->next->prev = node->prev;
+        node->prev->next = std::move(node->next);
+        _size--;
+        return value;
+    }
 
 public:
     DoublyLinkedList() : head(nullptr), tail(nullptr), _size(0) {}
@@ -192,4 +199,19 @@ public:
     Iterator back_iterator() {
         return Iterator(tail);
     }
+
+
+    Iterator erase(Iterator it) {
+        if (empty()) throw std::out_of_range("List is empty");
+        if (it == end()) throw std::out_of_range("Invalid iterator");
+
+        Iterator target_it = it++;
+
+        target_it == begin() ? pop_front() : 
+        target_it == back_iterator() ? pop_back() : 
+        erase_middle_node(target_it.current_node_ptr);
+        
+        return it;
+    }
+
 };
