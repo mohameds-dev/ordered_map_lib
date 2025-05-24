@@ -30,6 +30,7 @@ add_executable(
   tests/doubly_linked_list/pop_front_tests.cpp
   tests/doubly_linked_list/push_back_tests.cpp
   tests/doubly_linked_list/push_front_tests.cpp
+  tests/doubly_linked_list/constructor_tests.cpp
   tests/doubly_linked_list/clear_tests.cpp
   tests/doubly_linked_list/erase_tests.cpp
   tests/doubly_linked_list/move_to_begin_tests.cpp

@@ -59,6 +59,18 @@ private:
 
 public:
     DoublyLinkedList() : head(nullptr), tail(nullptr), _size(0) {}
+
+    DoublyLinkedList(std::initializer_list<T> init_list) : DoublyLinkedList() {
+        for (const auto& value : init_list) push_back(value);
+    }
+
+    template <typename ParamIterator>
+    DoublyLinkedList(ParamIterator begin, ParamIterator end) : DoublyLinkedList() {
+        for (auto it = begin; it != end; it++) {
+            push_back(*it);
+        }
+    }
+
     ~DoublyLinkedList() {
         clear();
     }
