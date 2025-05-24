@@ -33,11 +33,21 @@ public:
 
     void insert(const KeyType& key, const ValueType& value) {
         if (_map.find(key) == _map.end()) {
-            _list.push_back(std::make_pair(key, value));
+            _list.emplace_back(key, value);
             _map[key] = _list.back_iterator();
         }
         else {
-            *_map.find(key)->second = std::make_pair(key, value);
+            (*_map[key]).second = value;
+        }
+    }
+
+    void insert(const KeyType& key, ValueType&& value) {
+        if (_map.find(key) == _map.end()) {
+            _list.emplace_back(key, std::move(value));
+            _map[key] = _list.back_iterator();
+        }
+        else {
+            (*_map[key]).second = std::move(value);
         }
     }
 
@@ -122,7 +132,6 @@ public:
         if (_map.find(key) == _map.end()) {
             throw std::out_of_range("Key not found in ordered map");
         }
-        _list.push_front(std::make_pair(key, std::move(at(key))));
-        _list.erase(_map[key]);
+        _list.move_to_begin(_map[key]);
     }
 };
