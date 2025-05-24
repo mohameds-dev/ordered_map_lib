@@ -169,3 +169,11 @@ TEST_CASE("push_back 1, 2, dereferencing back iterator returns 2", "[back_iterat
     REQUIRE(*it == 2);
 }
 
+TEST_CASE("push_back 1, 2, 3, using decerement (--) on end iterator returns 3", "[back_iterator]") {
+    DoublyLinkedList<int> list;
+    list.push_back(1); list.push_back(2); list.push_back(3);
+    auto it = list.end();
+    --it;
+
+    REQUIRE(*it == 3);
+}

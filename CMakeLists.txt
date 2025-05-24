@@ -30,12 +30,18 @@ add_executable(
   tests/doubly_linked_list/pop_front_tests.cpp
   tests/doubly_linked_list/push_back_tests.cpp
   tests/doubly_linked_list/push_front_tests.cpp
+  tests/doubly_linked_list/constructor_tests.cpp
   tests/doubly_linked_list/clear_tests.cpp
+  tests/doubly_linked_list/erase_tests.cpp
+  tests/doubly_linked_list/move_to_begin_tests.cpp
+  tests/doubly_linked_list/emplace_back_tests.cpp
   tests/ordered_map/size_tests.cpp
   tests/ordered_map/insertion_tests.cpp
   tests/ordered_map/lookup_tests.cpp
   tests/ordered_map/iterator_tests.cpp
   tests/ordered_map/constructor_tests.cpp
+  tests/ordered_map/find_tests.cpp
+  tests/ordered_map/move_to_front_tests.cpp
 )
 target_link_libraries(tests PRIVATE ordered_map Catch2::Catch2WithMain)
 
