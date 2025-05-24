@@ -21,6 +21,35 @@ private:
     Node<T>* tail;
     int _size;
 
+
+    template<typename U>
+    void push_back_internal(U&& value) {
+        auto new_node = std::make_unique<Node<T>>(std::forward<U>(value), tail, nullptr);
+        if (!head) {
+            head = std::move(new_node);
+            tail = head.get();
+        } else {
+            tail->next = std::move(new_node);
+            tail->next->prev = tail;
+            tail = tail->next.get();
+        }
+        ++_size;
+    }
+
+    template<typename U>
+    void push_front_internal(U&& value) {
+        auto new_node = std::make_unique<Node<T>>(std::forward<U>(value), nullptr, std::move(head));
+        if (new_node->next) {
+            new_node->next->prev = new_node.get();
+        }
+        else {
+            tail = new_node.get();
+        }
+        head = std::move(new_node);
+        _size++;
+    }
+    
+
 public:
     DoublyLinkedList() : head(nullptr), tail(nullptr), _size(0) {}
     ~DoublyLinkedList() {
@@ -46,19 +75,7 @@ public:
         return tail->value;
     }
 
-    template<typename U>
-    void push_back_internal(U&& value) {
-        auto new_node = std::make_unique<Node<T>>(std::forward<U>(value), tail, nullptr);
-        if (!head) {
-            head = std::move(new_node);
-            tail = head.get();
-        } else {
-            tail->next = std::move(new_node);
-            tail->next->prev = tail;
-            tail = tail->next.get();
-        }
-        ++_size;
-    }
+    
 
     void push_back(T&& value) {
         push_back_internal(std::move(value));
@@ -88,16 +105,12 @@ public:
         return popped_value;
     }
 
+    void push_front(T&& value) {
+        push_front_internal(std::move(value));
+    }
+
     void push_front(const T& value) {
-        if (!head) {
-            head = std::make_unique<Node<T>>(value, nullptr, nullptr);
-            tail = head.get();
-        } else {
-            auto new_node = std::make_unique<Node<T>>(value, nullptr, std::move(head));
-            new_node->next->prev = new_node.get();
-            head = std::move(new_node);
-        }
-        _size++;
+        push_front_internal(value);
     }
 
     T pop_front() {
