@@ -26,10 +26,7 @@ private:
     Node<T>* tail;
     int _size;
 
-
-    template<typename U>
-    void push_back_internal(U&& value) {
-        auto new_node = std::make_unique<Node<T>>(std::forward<U>(value), tail, nullptr);
+    void link_new_back_node(std::unique_ptr<Node<T>> new_node) {
         if (!head) {
             head = std::move(new_node);
             tail = head.get();
@@ -39,6 +36,12 @@ private:
             tail = tail->next.get();
         }
         ++_size;
+    }
+
+    template<typename U>
+    void push_back_internal(U&& value) {
+        auto new_node = std::make_unique<Node<T>>(std::forward<U>(value), tail, nullptr);
+        link_new_back_node(std::move(new_node));
     }
 
     template<typename U>
@@ -286,16 +289,7 @@ public:
     template <typename... Args>
     void emplace_back(Args&&... args) {
         auto new_node = std::make_unique<Node<T>>(tail, nullptr, std::forward<Args>(args)...);
-        
-        if (!head) {
-            head = std::move(new_node);
-            tail = head.get();
-        } else {
-            tail->next = std::move(new_node);
-            tail->next->prev = tail;
-            tail = tail->next.get();
-        }
-        ++_size;
+        link_new_back_node(std::move(new_node));
     }
 
 
