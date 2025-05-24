@@ -147,13 +147,14 @@ public:
 
     class Iterator {
         Node<T>* current_node_ptr;
+        DoublyLinkedList<T>* list_ptr;
 
-        Iterator(Node<T>* a_current) : current_node_ptr(a_current) {}
+        Iterator(Node<T>* a_current, DoublyLinkedList<T>* a_list_ptr) : current_node_ptr(a_current), list_ptr(a_list_ptr) {}
         
         friend class DoublyLinkedList<T>;
 
     public:
-        Iterator() : current_node_ptr(nullptr) {}
+        Iterator() : current_node_ptr(nullptr), list_ptr(nullptr) {}
         
         bool operator==(const Iterator& other) const {
             return current_node_ptr == other.current_node_ptr;
@@ -181,7 +182,10 @@ public:
         }
 
         Iterator& operator--() {
-            if (current_node_ptr) {
+            if (current_node_ptr == nullptr) {
+                current_node_ptr = list_ptr->tail;
+            }
+            else if (current_node_ptr) {
                 current_node_ptr = current_node_ptr->prev;
             }
             return *this;
@@ -189,15 +193,15 @@ public:
     };
 
     Iterator begin() {
-        return Iterator(head.get());
+        return Iterator(head.get(), this);
     }
 
     Iterator end() {
-        return Iterator(nullptr);
+        return Iterator(nullptr, this);
     }
 
     Iterator back_iterator() {
-        return Iterator(tail);
+        return Iterator(tail, this);
     }
 
 
