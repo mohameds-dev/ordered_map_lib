@@ -228,6 +228,9 @@ public:
         }
 
         Iterator& operator++() {
+            if (list_ptr->empty())
+                throw std::out_of_range("List is empty");
+
             if (current_node_ptr) {
                 current_node_ptr = current_node_ptr->next.get();
             }
@@ -241,6 +244,9 @@ public:
         }
 
         Iterator& operator--() {
+            if (list_ptr->empty())
+                throw std::out_of_range("List is empty");
+                
             if (current_node_ptr == nullptr) {
                 current_node_ptr = list_ptr->tail;
             }
@@ -248,6 +254,10 @@ public:
                 current_node_ptr = current_node_ptr->prev;
             }
             return *this;
+        }
+
+        Iterator operator--(int) {
+            throw std::out_of_range("List is empty");
         }
     };
 
