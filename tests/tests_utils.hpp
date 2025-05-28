@@ -18,3 +18,10 @@ class MoveCopyFlag {
         return *this;
     }
 };
+
+class DestructionFlag {
+    public:
+    bool* destroyed;
+    DestructionFlag(bool* a_destroyed) : destroyed(a_destroyed) {}
+    ~DestructionFlag() { *destroyed = true; }
+};

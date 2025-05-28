@@ -45,7 +45,7 @@ public:
         }
     }
 
-    unsigned int size() const {
+    size_t size() const {
         return _list.size();
     }
 
@@ -56,6 +56,18 @@ public:
     void clear() {
         _list.clear();
         _map.clear();
+    }
+
+    size_t erase(const KeyType& key) {
+        if (empty()) return 0;
+        
+        auto it = _map.find(key);
+        if (it != _map.end()) {
+            _list.erase(it->second);
+            _map.erase(it);
+            return 1;
+        }
+        return 0;
     }
 
     ValueType& at(const KeyType& key) {

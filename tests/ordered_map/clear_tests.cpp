@@ -14,3 +14,12 @@ TEST_CASE("clear on a non-empty map clears the map and empty returns true", "[cl
     o_map.clear();
     REQUIRE(o_map.empty());
 }
+
+TEST_CASE("clear() on a non-empty map leads to the destruction of the values", "[clear]") {
+    bool destroyed = false;
+    OrderedMap<int, DestructionFlag> o_map = {
+        {1, DestructionFlag(&destroyed)}
+    };
+    o_map.clear();
+    REQUIRE(destroyed);
+}
