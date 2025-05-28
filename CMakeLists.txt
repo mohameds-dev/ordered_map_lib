@@ -41,6 +41,7 @@ add_executable(
   tests/ordered_map/iterator_tests.cpp
   tests/ordered_map/constructor_tests.cpp
   tests/ordered_map/find_tests.cpp
+  tests/ordered_map/clear_tests.cpp
   tests/ordered_map/move_to_front_tests.cpp
 )
 target_link_libraries(tests PRIVATE ordered_map_lib Catch2::Catch2WithMain)

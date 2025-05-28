@@ -4,17 +4,11 @@
 #include <stdexcept>
 
 
+
+
 template <typename KeyType, typename ValueType>
-class OrderedMap {
-private:
+class OrderedMap {    
 
-    DoublyLinkedList<std::pair<KeyType, ValueType>> _list;
-
-    using ListIterator = typename DoublyLinkedList<std::pair<KeyType, ValueType>>::Iterator;
-
-    std::unordered_map<KeyType, ListIterator> _map;
-
-    
 public:
     OrderedMap() {}
 
@@ -55,6 +49,15 @@ public:
         return _list.size();
     }
 
+    bool empty() const {
+        return _list.empty();
+    }
+    
+    void clear() {
+        _list.clear();
+        _map.clear();
+    }
+
     ValueType& at(const KeyType& key) {
         if (_map.find(key) == _map.end()) {
             throw std::out_of_range("Key not found in ordered map");
@@ -69,6 +72,8 @@ public:
         return (*_map[key]).second;
     }
 
+
+    using ListIterator = typename DoublyLinkedList<std::pair<KeyType, ValueType>>::Iterator;
     class Iterator {
         ListIterator _it;
 
@@ -145,4 +150,10 @@ public:
         }
         _list.move_to_begin(_map[key]);
     }
+
+private:
+
+    DoublyLinkedList<std::pair<KeyType, ValueType>> _list;
+    std::unordered_map<KeyType, ListIterator> _map;
+
 };
