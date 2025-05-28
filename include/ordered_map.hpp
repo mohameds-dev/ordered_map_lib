@@ -5,16 +5,7 @@
 
 
 template <typename KeyType, typename ValueType>
-class OrderedMap {
-private:
-
-    DoublyLinkedList<std::pair<KeyType, ValueType>> _list;
-
-    using ListIterator = typename DoublyLinkedList<std::pair<KeyType, ValueType>>::Iterator;
-
-    std::unordered_map<KeyType, ListIterator> _map;
-
-    
+class OrderedMap {    
 public:
     OrderedMap() {}
 
@@ -29,6 +20,10 @@ public:
         for (auto it = begin; it != end; it++) {
             insert(it->first, it->second);
         }
+    }
+
+    ~OrderedMap() {
+        clear();
     }
 
     void insert(const KeyType& key, const ValueType& value) {
@@ -51,8 +46,29 @@ public:
         }
     }
 
-    unsigned int size() const {
+    size_t size() const {
         return _list.size();
+    }
+
+    bool empty() const {
+        return _list.empty();
+    }
+    
+    void clear() {
+        _list.clear();
+        _map.clear();
+    }
+
+    size_t erase(const KeyType& key) {
+        if (empty()) return 0;
+        
+        auto it = _map.find(key);
+        if (it != _map.end()) {
+            _list.erase(it->second);
+            _map.erase(it);
+            return 1;
+        }
+        return 0;
     }
 
     ValueType& at(const KeyType& key) {
@@ -69,6 +85,8 @@ public:
         return (*_map[key]).second;
     }
 
+
+    using ListIterator = typename DoublyLinkedList<std::pair<KeyType, ValueType>>::Iterator;
     class Iterator {
         ListIterator _it;
 
@@ -91,6 +109,17 @@ public:
         Iterator operator++(int) {
             Iterator initial_state_copy = *this;
             _it++;
+            return initial_state_copy;
+        }
+
+        Iterator& operator--() {
+            --_it;
+            return *this;
+        }
+
+        Iterator operator--(int) {
+            Iterator initial_state_copy = *this;
+            _it--;
             return initial_state_copy;
         }
 
@@ -134,4 +163,17 @@ public:
         }
         _list.move_to_begin(_map[key]);
     }
+
+    void move_to_back(const KeyType& key) {
+        if (_map.find(key) == _map.end()) {
+            throw std::out_of_range("Key not found in ordered map");
+        }
+        _list.move_to_end(_map[key]);
+    }
+
+private:
+
+    DoublyLinkedList<std::pair<KeyType, ValueType>> _list;
+    std::unordered_map<KeyType, ListIterator> _map;
+
 };
