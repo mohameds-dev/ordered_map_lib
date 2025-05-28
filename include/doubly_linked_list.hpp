@@ -21,89 +21,6 @@ struct Node {
 
 template <typename T>
 class DoublyLinkedList {
-private:
-    std::unique_ptr<Node<T>> head;
-    Node<T>* tail;
-    int _size;
-
-    void link_new_back_node(std::unique_ptr<Node<T>> new_node) {
-        if (!head) {
-            head = std::move(new_node);
-            tail = head.get();
-        } else {
-            tail->next = std::move(new_node);
-            tail->next->prev = tail;
-            tail = tail->next.get();
-        }
-        ++_size;
-    }
-
-    template<typename U>
-    void push_back_internal(U&& value) {
-        auto new_node = std::make_unique<Node<T>>(tail, nullptr, std::forward<U>(value));
-        link_new_back_node(std::move(new_node));
-    }
-
-    template<typename U>
-    void push_front_internal(U&& value) {
-        auto new_node = std::make_unique<Node<T>>(nullptr, std::move(head), std::forward<U>(value));
-        if (new_node->next) {
-            new_node->next->prev = new_node.get();
-        }
-        else {
-            tail = new_node.get();
-        }
-        head = std::move(new_node);
-        _size++;
-    }
-    
-    T erase_middle_node(Node<T>* node) {
-        T value = std::move(node->value);
-        node->next->prev = node->prev;
-        node->prev->next = std::move(node->next);
-        _size--;
-        return value;
-    }
-
-    std::unique_ptr<Node<T>> extract_node_and_link_prev_with_next(Node<T>* node) {
-        std::unique_ptr<Node<T>> extracted;
-        
-        if (node->next) {
-            node->next->prev = node->prev;
-        } else {
-            tail = node->prev;
-        }
-        
-        if (node->prev) {
-            extracted = std::move(node->prev->next);
-            node->prev->next = std::move(node->next);
-        } else {
-            extracted = std::move(head);
-            head = std::move(node->next);
-        }
-
-        return extracted;
-    }
-
-    void emplace_node_before(std::unique_ptr<Node<T>> node, Node<T>* position) {
-        if (position == head.get()) {
-            node->next = std::move(head);
-            if (node->next) node->next->prev = node.get();
-            head = std::move(node);
-        }
-        else if (position == nullptr) {
-            node->prev = tail;
-            tail = node.get();
-            node->prev->next = std::move(node);
-        }
-        else {
-            node->prev = position->prev;
-            node->next = std::move(position->prev->next);
-            position->prev = node.get();
-            node->prev->next = std::move(node);
-        }
-    }
-
 public:
     DoublyLinkedList() : head(nullptr), tail(nullptr), _size(0) {}
 
@@ -195,13 +112,11 @@ public:
     }
 
     void clear() {
-        while(head) {
-            pop_back();
-        }
+        while(!empty()) pop_back();
     }
 
     bool empty() const {
-        return _size == 0;
+        return !head;
     }
 
     class Iterator {
@@ -313,5 +228,86 @@ public:
         link_new_back_node(std::move(new_node));
     }
 
+private:
+    void link_new_back_node(std::unique_ptr<Node<T>> new_node) {
+        if (empty()) {
+            head = std::move(new_node);
+            tail = head.get();
+        } else {
+            tail->next = std::move(new_node);
+            tail->next->prev = tail;
+            tail = tail->next.get();
+        }
+        ++_size;
+    }
 
+    template<typename U>
+    void push_back_internal(U&& value) {
+        auto new_node = std::make_unique<Node<T>>(tail, nullptr, std::forward<U>(value));
+        link_new_back_node(std::move(new_node));
+    }
+
+    template<typename U>
+    void push_front_internal(U&& value) {
+        auto new_node = std::make_unique<Node<T>>(nullptr, std::move(head), std::forward<U>(value));
+        if (new_node->next) {
+            new_node->next->prev = new_node.get();
+        }
+        else {
+            tail = new_node.get();
+        }
+        head = std::move(new_node);
+        _size++;
+    }
+    
+    T erase_middle_node(Node<T>* node) {
+        T value = std::move(node->value);
+        node->next->prev = node->prev;
+        node->prev->next = std::move(node->next);
+        _size--;
+        return value;
+    }
+
+    std::unique_ptr<Node<T>> extract_node_and_link_prev_with_next(Node<T>* node) {
+        std::unique_ptr<Node<T>> extracted;
+        
+        if (node->next) {
+            node->next->prev = node->prev;
+        } else {
+            tail = node->prev;
+        }
+        
+        if (node->prev) {
+            extracted = std::move(node->prev->next);
+            node->prev->next = std::move(node->next);
+        } else {
+            extracted = std::move(head);
+            head = std::move(node->next);
+        }
+
+        return extracted;
+    }
+
+    void emplace_node_before(std::unique_ptr<Node<T>> node, Node<T>* position) {
+        if (position == head.get()) {
+            node->next = std::move(head);
+            if (node->next) node->next->prev = node.get();
+            head = std::move(node);
+        }
+        else if (position == nullptr) {
+            node->prev = tail;
+            tail = node.get();
+            node->prev->next = std::move(node);
+        }
+        else {
+            node->prev = position->prev;
+            node->next = std::move(position->prev->next);
+            position->prev = node.get();
+            node->prev->next = std::move(node);
+        }
+    }
+
+    std::unique_ptr<Node<T>> head;
+    Node<T>* tail;
+    int _size;
 };
