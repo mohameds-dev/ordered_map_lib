@@ -222,6 +222,14 @@ public:
         emplace_node_before(std::move(extracted), head.get());
     }
 
+    void move_to_end(Iterator it) {
+        raise_exception_if_empty();
+        if (it == end()) throw std::out_of_range("move_to_end called on end iterator");
+
+        auto extracted = extract_node_and_link_prev_with_next(it.current_node_ptr);
+        emplace_node_before(std::move(extracted), nullptr);
+    }
+
     template <typename... Args>
     void emplace_back(Args&&... args) {
         auto new_node = std::make_unique<Node<T>>(tail, nullptr, std::forward<Args>(args)...);
