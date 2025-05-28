@@ -157,6 +157,8 @@ public:
         Iterator& operator--() {
             raise_exception_if_empty();
 
+            if (*this == list_ptr->begin())
+                throw std::out_of_range("called -- on begin iterator");
                 
             if (current_node_ptr == nullptr) {
                 current_node_ptr = list_ptr->tail;
