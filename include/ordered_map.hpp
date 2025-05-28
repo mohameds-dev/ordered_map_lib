@@ -4,11 +4,8 @@
 #include <stdexcept>
 
 
-
-
 template <typename KeyType, typename ValueType>
 class OrderedMap {    
-
 public:
     OrderedMap() {}
 
@@ -165,6 +162,13 @@ public:
             throw std::out_of_range("Key not found in ordered map");
         }
         _list.move_to_begin(_map[key]);
+    }
+
+    void move_to_back(const KeyType& key) {
+        if (_map.find(key) == _map.end()) {
+            throw std::out_of_range("Key not found in ordered map");
+        }
+        _list.move_to_end(_map[key]);
     }
 
 private:
