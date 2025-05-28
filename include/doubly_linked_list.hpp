@@ -69,9 +69,7 @@ public:
     }
 
     T pop_back() {
-        if (!head) {
-            throw std::out_of_range("List is empty");
-        }
+        raise_exception_if_empty();
 
         T popped_value = std::move(tail->value);
 
@@ -97,9 +95,7 @@ public:
     }
 
     T pop_front() {
-        if (!head) {
-            throw std::out_of_range("List is empty");
-        }
+        raise_exception_if_empty();
 
         T popped_value = std::move(head->value);
         head = std::move(head->next);
@@ -120,13 +116,6 @@ public:
     }
 
     class Iterator {
-        Node<T>* current_node_ptr;
-        DoublyLinkedList<T>* list_ptr;
-
-        Iterator(Node<T>* a_current, DoublyLinkedList<T>* a_list_ptr) : current_node_ptr(a_current), list_ptr(a_list_ptr) {}
-        
-        friend class DoublyLinkedList<T>;
-
     public:
         Iterator() : current_node_ptr(nullptr), list_ptr(nullptr) {}
         
@@ -139,21 +128,19 @@ public:
         }
 
         T& operator*() const {
-            if (list_ptr->empty())
-                throw std::out_of_range("List is empty");
+            raise_exception_if_empty();
 
             if (*this == list_ptr->end())
-                throw std::out_of_range("end() iterator unexpectedly dereferenced");
+                throw std::out_of_range("end iterator unexpectedly dereferenced");
 
             return current_node_ptr->value;
         }
 
         Iterator& operator++() {
-            if (list_ptr->empty())
-                throw std::out_of_range("List is empty");
+            raise_exception_if_empty();
 
             if (*this == list_ptr->end())
-                throw std::out_of_range("end() iterator unexpectedly dereferenced");
+                throw std::out_of_range("called ++ on end iterator");
 
             if (current_node_ptr) {
                 current_node_ptr = current_node_ptr->next.get();
@@ -168,8 +155,8 @@ public:
         }
 
         Iterator& operator--() {
-            if (list_ptr->empty())
-                throw std::out_of_range("List is empty");
+            raise_exception_if_empty();
+
                 
             if (current_node_ptr == nullptr) {
                 current_node_ptr = list_ptr->tail;
@@ -185,6 +172,17 @@ public:
             --(*this);
             return initial_state_copy;
         }
+
+        private:
+        void raise_exception_if_empty() const {
+            if (list_ptr->empty())
+                throw std::out_of_range("Container is empty");
+        }
+
+        Node<T>* current_node_ptr;
+        DoublyLinkedList<T>* list_ptr;
+        Iterator(Node<T>* a_current, DoublyLinkedList<T>* a_list_ptr) : current_node_ptr(a_current), list_ptr(a_list_ptr) {}
+        friend class DoublyLinkedList<T>;
     };
 
     Iterator begin() {
@@ -201,8 +199,8 @@ public:
 
 
     Iterator erase(Iterator it) {
-        if (empty()) throw std::out_of_range("List is empty");
-        if (it == end()) throw std::out_of_range("Invalid iterator");
+        raise_exception_if_empty();
+        if (it == end()) throw std::out_of_range("erase called on end iterator");
 
         Iterator target_it = it++;
 
@@ -214,8 +212,8 @@ public:
     }
 
     void move_to_begin(Iterator it) {
-        if (empty()) throw std::out_of_range("List is empty");
-        if (it == end()) throw std::out_of_range("Invalid iterator");
+        raise_exception_if_empty();
+        if (it == end()) throw std::out_of_range("move_to_begin called on end iterator");
         if (it == begin()) return;
 
         auto extracted = extract_node_and_link_prev_with_next(it.current_node_ptr);
@@ -305,6 +303,11 @@ private:
             position->prev = node.get();
             node->prev->next = std::move(node);
         }
+    }
+
+    void raise_exception_if_empty() const {
+        if (empty())
+            throw std::out_of_range("Container is empty");
     }
 
     std::unique_ptr<Node<T>> head;
