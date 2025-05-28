@@ -25,6 +25,10 @@ public:
         }
     }
 
+    ~OrderedMap() {
+        clear();
+    }
+
     void insert(const KeyType& key, const ValueType& value) {
         if (_map.find(key) == _map.end()) {
             _list.emplace_back(key, value);
