@@ -237,6 +237,9 @@ public:
             if (list_ptr->empty())
                 throw std::out_of_range("List is empty");
 
+            if (*this == list_ptr->end())
+                throw std::out_of_range("end() iterator unexpectedly dereferenced");
+
             if (current_node_ptr) {
                 current_node_ptr = current_node_ptr->next.get();
             }

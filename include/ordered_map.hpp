@@ -94,6 +94,17 @@ public:
             return initial_state_copy;
         }
 
+        Iterator& operator--() {
+            --_it;
+            return *this;
+        }
+
+        Iterator operator--(int) {
+            Iterator initial_state_copy = *this;
+            _it--;
+            return initial_state_copy;
+        }
+
         bool operator==(const Iterator& other) const {
             return _it == other._it;
         }

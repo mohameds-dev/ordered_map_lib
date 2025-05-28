@@ -71,6 +71,14 @@ TEST_CASE("using post-decrement operator on end() in an empty list throws an exc
     REQUIRE_THROWS_AS(it--, std::out_of_range);
 }
 
+TEST_CASE("using pre-increment operator on end() in a non-empty list throws an exception", "[iterator]") {
+    DoublyLinkedList<int> list = {1};
+    auto it = list.end();
+
+    REQUIRE_THROWS_AS(++it, std::out_of_range);
+}
+
+
 TEST_CASE("using pre-increment operator on begin() in an empty list throws an exception", "[iterator]") {
     DoublyLinkedList<int> list;
     auto it = list.begin();
