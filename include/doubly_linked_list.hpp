@@ -224,6 +224,12 @@ public:
         }
 
         T& operator*() const {
+            if (list_ptr->empty())
+                throw std::out_of_range("List is empty");
+
+            if (*this == list_ptr->end())
+                throw std::out_of_range("end() iterator unexpectedly dereferenced");
+
             return current_node_ptr->value;
         }
 
@@ -257,7 +263,9 @@ public:
         }
 
         Iterator operator--(int) {
-            throw std::out_of_range("List is empty");
+            Iterator initial_state_copy = *this;
+            --(*this);
+            return initial_state_copy;
         }
     };
 

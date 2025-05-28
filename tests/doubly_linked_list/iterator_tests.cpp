@@ -23,6 +23,20 @@ TEST_CASE("list contains {1}, begin iterator != end iterator returns false", "[i
     REQUIRE(list.begin() != list.end());
 }
 
+TEST_CASE("dereferencing end iterator throws an exception", "[iterator]") {
+    DoublyLinkedList<int> list;
+    auto it = list.end();
+
+    REQUIRE_THROWS_AS(*it, std::out_of_range);
+}
+
+TEST_CASE("dereferencing begin iterator in an empty list throws an exception", "[iterator]") {
+    DoublyLinkedList<int> list;
+    auto it = list.begin();
+
+    REQUIRE_THROWS_AS(*it, std::out_of_range);
+}
+
 TEST_CASE("list contains {1}, begin iterator dereferences to 1", "[begin]") {
     DoublyLinkedList<int> list = {1};
 
@@ -164,7 +178,7 @@ TEST_CASE("list contains {1, 2}, dereferencing back iterator returns 2", "[back_
     REQUIRE(*it == 2);
 }
 
-TEST_CASE("list contains {1, 2, 3}, using decerement (--) on end iterator returns 3", "[back_iterator]") {
+TEST_CASE("list contains {1, 2, 3}, using pre-decrement (--it) on end iterator points to 3", "[iterator]") {
     DoublyLinkedList<int> list = {1, 2, 3};
     auto it = list.end();
     --it;
@@ -172,5 +186,19 @@ TEST_CASE("list contains {1, 2, 3}, using decerement (--) on end iterator return
     REQUIRE(*it == 3);
 }
 
+TEST_CASE("list contains {1, 2, 3}, using post-decrement (it--) on end iterator points to 3", "[iterator]") {
+    DoublyLinkedList<int> list = {1, 2, 3};
+    auto it = list.end();
+    it--;
 
+    REQUIRE(*it == 3);
+}
 
+TEST_CASE("list contains {1, 2, 3}, using pre-decrement (--it) on end iterator points to 2", "[iterator]") {
+    DoublyLinkedList<int> list = {1, 2, 3};
+    auto it = list.end();
+    --it;
+    --it;
+
+    REQUIRE(*it == 2);
+}
