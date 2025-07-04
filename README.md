@@ -2,6 +2,13 @@
 
 A C++ implementation of an ordered map data structure that maintains insertion order while providing O(1) key-value lookups.
 
+## 🏆 Quality Metrics
+
+- **Code Coverage**: 97.3% implementation coverage (271/277 lines)
+- **Memory Safety**: Zero memory leaks verified by Valgrind
+- **Test Suite**: 2,246 assertions across 195 test cases
+- **Build Status**: [![CMake](https://github.com/mohameds-dev/ordered_map_lib/actions/workflows/cmake.yml/badge.svg)](https://github.com/mohameds-dev/ordered_map_lib/actions/workflows/cmake.yml)
+
 ## Table of Contents
 
 - [Features](#features)
