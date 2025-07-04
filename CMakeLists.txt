@@ -57,3 +57,10 @@ catch_discover_tests(tests)
 
 add_executable(main src/main.cpp)
 target_link_libraries(main PRIVATE ordered_map_lib)
+
+# Enable coverage flags for Debug builds
+if(CMAKE_BUILD_TYPE STREQUAL "Debug" OR NOT CMAKE_BUILD_TYPE)
+    message(STATUS "Enabling code coverage flags")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
+endif()

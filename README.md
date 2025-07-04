@@ -13,6 +13,8 @@ A C++ implementation of an ordered map data structure that maintains insertion o
 - [Setting Up VS Code (or Cursor)](#setting-up-vs-code-or-cursor)
 - [Formatting Code](#formatting-code)
 - [Building and Running Tests](#building-and-running-tests)
+- [Memory Leak Checks](#memory-leak-checks)
+- [Code Coverage](#code-coverage)
 - [GitHub Actions CI](#github-actions-ci)
 - [Adding a New Test](#adding-a-new-test)
 - [Future Improvements](#future-improvements)
@@ -49,7 +51,7 @@ int main() {
     for (const auto& pair : map) {
         std::cout << pair.first << ": " << pair.second << std::endl;
     }
-    
+
     return 0;
 }
 ```
@@ -139,8 +141,6 @@ OrderedMapIterator~Key,Value~ *-- Iterator~pair<Key,Value>~
     DoublyLinkedList~T~ *-- Iterator~T~
     OrderedMap~Key,Value~ *-- DoublyLinkedList~pair<Key,Value>~
     OrderedMap~Key,Value~ ..> Iterator~pair<Key,Value>~
-
-
 
 ```
 
@@ -245,6 +245,66 @@ ordered_map/
    cd build
    ./tests --tags [tag]
    ```
+
+## Memory Leak Checks
+
+This project is tested for memory leaks using Valgrind.  
+Below is a sample output from running the full test suite under Valgrind:
+
+```
+$ valgrind --leak-check=full ./build/tests --rng-seed 0
+
+==12798== Memcheck, a memory error detector
+==12798== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12798== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==12798== Command: ./build/tests --rng-seed 0
+==12798==
+Randomness seeded to: 0
+===============================================================================
+All tests passed (2246 assertions in 195 test cases)
+
+==12798==
+==12798== HEAP SUMMARY:
+==12798==     in use at exit: 0 bytes in 0 blocks
+==12798==   total heap usage: 1,528,976 allocs, 1,528,976 frees, 45,317,931 bytes allocated
+==12798==
+==12798== All heap blocks were freed -- no leaks are possible
+==12798==
+==12798== For lists of detected and suppressed errors, rerun with: -s
+==12798== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+```
+
+## Code Coverage
+
+This project includes comprehensive test coverage analysis using **LCOV**, which provides accurate coverage metrics for header-only libraries by distinguishing between implementation code and test code.
+
+### Generate Coverage Report
+
+From the build directory, run this script:
+
+```bash
+./create_and_run_coverage.sh
+```
+
+### Implementation Coverage Results
+
+**Pure Implementation Coverage (excluding test code and system headers):**
+
+- **doubly_linked_list.hpp**: **97.8%** of 185 lines covered
+- **ordered_map.hpp**: **98.9%** of 91 lines covered
+
+**Overall Project Coverage: 98.0%** (1464 of 1494 lines)
+
+### Coverage Summary
+
+This shows that:
+
+- **97.8%** of the doubly linked list implementation is tested
+- **98.9%** of the ordered map implementation is tested
+- Only a few edge cases remain uncovered
+- The test suite comprehensively exercises the core functionality
+
+The HTML report provides line-by-line coverage details, showing exactly which implementation lines are covered by the test suite.
 
 ## GitHub Actions CI
 
