@@ -74,80 +74,89 @@ The implementation of `OrderedMap` uses a combination of:
 
 ## Class Diagram
 
+## Class Diagram
+
 ```mermaid
 classDiagram
-    class Node~T~ {
-        +T value
-        +unique_ptr<Node~T~> next
-        +Node~T~* prev
-        +Node(T&& value, Node* prev, unique_ptr<Node> next)
-        +Node(Node* prev, unique_ptr<Node> next, Args&&... args)
-    }
 
-    class DoublyLinkedList~T~ {
-        -unique_ptr<Node~T~> head
-        -Node~T~* tail
-        -int _size
-        +push_back(const T&)
-        +push_back(T&&)
-        +emplace_back(Args&&...)
-        +pop_back()
-        +move_to_begin(Iterator)
-        +extract_node_and_link_prev_with_next(Node~T~*)
-        +emplace_node_before(unique_ptr<Node~T~>, Node~T~*)
-        +begin()
-        +end()
-        +size()
-        +front()
-        +back()
-    }
-
-    class Iterator~T~ {
-        -Node~T~* current_node_ptr
-        -DoublyLinkedList~T~* list_ptr
-        +operator++()
-        +operator--()
-        +operator*()
-        +operator==()
-        +operator!=()
-    }
-
-    class OrderedMap~Key,Value~ {
-        -unordered_map<Key, Iterator> _map
-        -DoublyLinkedList<pair<Key,Value>> _list
-        +insert(const Key&, const Value&)
-        +insert(const Key&, Value&&)
-        +move_to_front(const Key&)
-        +operator[](const Key&)
-        +at(const Key&)
-        +size()
-        +begin()
-        +end()
-    }
-
-    class OrderedMap~Key,Value~ {
-    ...
-    +Iterator begin()
-    +Iterator end()
-   }
-
-   class OrderedMapIterator~Key,Value~ {
-    - Iterator~pair<Key,Value>~ list_iterator
-    + operator++()
-    + operator*()
-    + operator!=()
+class Node~T~ {
+    +T value
+    +unique_ptr<Node~T~> next
+    +Node~T~* prev
+    +Node(Node* prev, unique_ptr<Node> next, U&& value)
+    +Node(Node* prev, unique_ptr<Node> next, Args&&... args)
 }
 
+class DoublyLinkedList~T~ {
+    -unique_ptr<Node~T~> head
+    -Node~T~* tail
+    -int _size
+    +push_back(const T&)
+    +push_back(T&&)
+    +push_front(const T&)
+    +push_front(T&&)
+    +emplace_back(Args&&...)
+    +pop_back()
+    +pop_front()
+    +move_to_begin(Iterator)
+    +move_to_end(Iterator)
+    +erase(Iterator)
+    +size() const
+    +begin()
+    +end()
+    +front() const
+    +back() const
+    +clear()
+    +back_iterator()
+    -extract_node_and_link_prev_with_next(Node~T~*)
+    -emplace_node_before(unique_ptr<Node~T~>, Node~T~*)
+    -emplace_node_after(unique_ptr<Node~T~>, Node~T~*)
+}
 
-   OrderedMap~Key,Value~ *-- OrderedMapIterator~Key,Value~
-OrderedMapIterator~Key,Value~ *-- Iterator~pair<Key,Value>~
+class DoublyLinkedListIterator~T~ {
+    -Node~T~* current_node_ptr
+    -DoublyLinkedList~T~* list_ptr
+    +operator++()
+    +operator--()
+    +operator*()
+    +operator->()
+    +operator==() const
+    +operator!=() const
+}
 
+class OrderedMap~Key,Value~ {
+    -unordered_map<Key, DoublyLinkedListIterator~pair<Key,Value>~> _map
+    -DoublyLinkedList~pair<Key,Value>~ _list
+    +insert(const Key&, const Value&)
+    +insert(const Key&, Value&&)
+    +move_to_front(const Key&)
+    +move_to_back(const Key&)
+    +operator[](const Key&)
+    +at(const Key&) const
+    +erase(const Key&)
+    +find(const Key&) const
+    +size() const
+    +begin()
+    +end()
+    +clear()
+    +back_iterator()
+}
 
+class OrderedMapIterator~Key,Value~ {
+    -DoublyLinkedListIterator~pair<Key,Value>~ list_iterator
+    +operator++()
+    +operator*()
+    +operator->()
+    +operator!=() const
+    +operator==() const
+}
 
-    DoublyLinkedList~T~ *-- Node~T~
-    DoublyLinkedList~T~ *-- Iterator~T~
-    OrderedMap~Key,Value~ *-- DoublyLinkedList~pair<Key,Value>~
-    OrderedMap~Key,Value~ ..> Iterator~pair<Key,Value>~
+DoublyLinkedList~T~ *-- Node~T~
+DoublyLinkedList~T~ *-- DoublyLinkedListIterator~T~
+OrderedMap~Key,Value~ *-- DoublyLinkedList~pair<Key,Value>~
+OrderedMap~Key,Value~ *-- OrderedMapIterator~Key,Value~
+OrderedMapIterator~Key,Value~ *-- DoublyLinkedListIterator~pair<Key,Value>~
+
 
 ```
 
@@ -351,19 +360,17 @@ The HTML report provides line-by-line coverage details, showing exactly which im
 
 ## Future Features
 
-- [ ] Add `move_to_front` and `move_to_back` operations in ordered_map to re-order entries (without affecting or copying the entry value)
-
+- [x] Add std::move and copying semantics
+- [x] **DoublyLinkedList:** Add tests for copying & moving
+- [x] **DoublyLinkedList:** Add `erase` method to erase elements given their iterator
+- [x] **DoublyLinkedList:** Add pre and post decrement operators
+- [x] **DoublyLinkedList:** Test front(), back(), insertion and deletion functions for copying behavior
+- [x] Add `move_to_front` and `move_to_back` operations in ordered_map to re-order entries (without affecting or copying the entry value)
+- [x] **OrderedMap:** Add support for initializing map with intializer list
+- [x] **OrderedMap:** Add support for initializing map with two container iterators
+- [x] **OrderedMap:** Add `erase` method to erase elements given their iterator or key
+- [x] Test for memory leaks
+- [x] Add test coverage
 - [ ] Add const iterators
 - [ ] Add reverse iterators
-- [ ] Add range-based operations
 - [ ] Add performance benchmarks
-- [ ] Add support for custom allocators
-- [ ] Add std::move and copying semantics
-- [ ] **DoublyLinkedList:** Add tests for copying & moving
-- [ ] **DoublyLinkedList:** Add `erase` method to erase elements given their iterator
-- [ ] **DoublyLinkedList:** Add pre and post decrement operators
-- [ ] **DoublyLinkedList:** Test front(), back(), insertion and deletion functions for copying behavior
-- [ ] **OrderedMap:** Add support for initializing map with
-- [ ] **OrderedMap:** Add support for custom hash functions
-- [ ] **OrderedMap:** Add `erase` method to erase elements given their iterator or key
-- [ ] Test for memory leaks
