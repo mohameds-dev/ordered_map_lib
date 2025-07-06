@@ -6,7 +6,7 @@ TEST_CASE("empty ordered map has size 0", "[insert]") {
     REQUIRE(o_map.size() == 0);
 }
 
-TEST_CASE("inserting {1, 2} into an empty ordered map", "[insert]") {
+TEST_CASE("insert {1, 2} into an empty ordered map", "[insert]") {
     OrderedMap<int, int> o_map;
     o_map.insert(1, 2);
     REQUIRE(o_map.size() == 1);

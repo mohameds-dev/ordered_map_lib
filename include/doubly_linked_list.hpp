@@ -219,7 +219,7 @@ public:
         if (it == begin()) return;
 
         auto extracted = extract_node_and_link_prev_with_next(it.current_node_ptr);
-        emplace_node_before(std::move(extracted), head.get());
+        emplace_node_at_head(std::move(extracted));
     }
 
     void move_to_end(Iterator it) {
@@ -227,7 +227,7 @@ public:
         if (it == end()) throw std::out_of_range("move_to_end called on end iterator");
 
         auto extracted = extract_node_and_link_prev_with_next(it.current_node_ptr);
-        emplace_node_before(std::move(extracted), nullptr);
+        emplace_node_at_tail(std::move(extracted));
     }
 
     template <typename... Args>
@@ -296,23 +296,16 @@ private:
         return extracted;
     }
 
-    void emplace_node_before(std::unique_ptr<Node<T>> node, Node<T>* position) {
-        if (position == head.get()) {
-            node->next = std::move(head);
-            if (node->next) node->next->prev = node.get();
-            head = std::move(node);
-        }
-        else if (position == nullptr) {
-            node->prev = tail;
-            tail = node.get();
-            node->prev->next = std::move(node);
-        }
-        else {
-            node->prev = position->prev;
-            node->next = std::move(position->prev->next);
-            position->prev = node.get();
-            node->prev->next = std::move(node);
-        }
+    void emplace_node_at_head(std::unique_ptr<Node<T>> node){
+        node->next = std::move(head);
+        if (node->next) node->next->prev = node.get();
+        head = std::move(node);
+    }
+
+    void emplace_node_at_tail(std::unique_ptr<Node<T>> node){
+        node->prev = tail;
+        tail = node.get();
+        node->prev->next = std::move(node);
     }
 
     void raise_exception_if_empty() const {
