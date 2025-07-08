@@ -309,8 +309,6 @@ From the build directory, run this script:
 - **doubly_linked_list.hpp**: **97.8%** of 185 lines covered
 - **ordered_map.hpp**: **98.9%** of 91 lines covered
 
-**Overall Project Coverage: 98.0%** (1464 of 1494 lines)
-
 ### Coverage Summary
 
 This shows that:
