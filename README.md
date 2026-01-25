@@ -74,8 +74,6 @@ The implementation of `OrderedMap` uses a combination of:
 
 ## Class Diagram
 
-## Class Diagram
-
 ```mermaid
 classDiagram
 
