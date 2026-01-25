@@ -178,25 +178,50 @@ clang-format --version
 ## Project Structure
 
 ```
-ordered_map/
+.
 ├── .github/
 │   └── workflows/
 │       └── cmake.yml       # GitHub Actions workflow
 ├── CMakeLists.txt         # CMake build configuration
-├── build.sh              # Script to build and test
-├── .clang-format         # Code formatting rules
+├── README.md              # Project documentation
+├── create_and_run_coverage.sh  # Coverage report script
+├── run_build.sh           # Build script
+├── run_main.sh            # Main execution script
+├── build.sh               # Script to build and test
+├── .clang-format          # Code formatting rules
 ├── include/
 │   ├── doubly_linked_list.hpp    # Doubly-linked list implementation
 │   └── ordered_map.hpp          # Ordered map interface
 ├── src/
-├── tests/
-│   └── doubly_linked_list/      # Test files for doubly linked list
-│       ├── front_and_back.cpp   # Tests for front/back operations
-│       ├── iterator_tests.cpp   # Tests for iterator functionality
-│       ├── pop_back_tests.cpp   # Tests for pop_back operations
-│       ├── pop_front_tests.cpp  # Tests for pop_front operations
-│       ├── push_back_tests.cpp  # Tests for push_back operations
-│       └── push_front_tests.cpp # Tests for push_front operations
+│   └── main.cpp           # Main source file
+└── tests/
+    ├── doubly_linked_list/
+    │   ├── clear_tests.cpp
+    │   ├── constructor_tests.cpp
+    │   ├── emplace_back_tests.cpp
+    │   ├── erase_tests.cpp
+    │   ├── front_and_back.cpp
+    │   ├── iterator_tests.cpp
+    │   ├── move_to_begin_tests.cpp
+    │   ├── move_to_end_tests.cpp
+    │   ├── pop_back_tests.cpp
+    │   ├── pop_front_tests.cpp
+    │   ├── push_back_tests.cpp
+    │   ├── push_front_tests.cpp
+    │   └── size_tests.cpp
+    ├── ordered_map/
+    │   ├── clear_tests.cpp
+    │   ├── constructor_tests.cpp
+    │   ├── destructor_tests.cpp
+    │   ├── erase_tests.cpp
+    │   ├── find_tests.cpp
+    │   ├── insertion_tests.cpp
+    │   ├── iterator_tests.cpp
+    │   ├── lookup_tests.cpp
+    │   ├── move_to_back_tests.cpp
+    │   ├── move_to_front_tests.cpp
+    │   └── size_tests.cpp
+    └── tests_utils.hpp     # Test utilities
 ```
 
 ## Setting Up VS Code (or Cursor)
